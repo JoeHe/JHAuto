@@ -1,0 +1,77 @@
+Host:
+  Philippines: ''
+  Indonesia: ''
+  Vietnam: 'http://1.1.1.22'
+
+RuleEnginePort:
+  Philippines: ''
+  Indonesia: ''
+  Vietnam: ':31399'
+
+
+rule:
+  path: '/rule'
+  header: {'Content-Type': 'application/json'}
+  params:
+    general: {'idAccount': '', 'idBorrow': '', 'status': 'new', 'transactionId': '', 'roundId': ''}
+
+ruleTestData:
+  rule99: {'idAccount': 3143, 'idBorrow': 8275, 'roundId': 'ext_end'}
+  rule100: {'idAccount': 3153, 'idBorrow': 8283, 'roundId': 'ext_end'}
+
+SQL:
+  query:
+    ruleResult: 'select id,id_account,id_borrow,transaction_id,rule_id,rule_result,updated_at,group_id from vnrisk_rule_result where id_account={} and rule_id={} order by id desc limit 1;'
+    userContactsCnt: "select count(*) as cnt from vnrisk_user_contacts where id_account={} and mobile_no='{}';"
+    applied_contacts_cnt: "select count(*) as cnt from vnrisk_applied_contacts where mobile='{}';"
+  delete:
+    modelTotalScore: 'delete from vnrisk_rule_model_total_score where id_account={};'
+    appliedContacts: 'delete from vnrisk_applied_contacts where mobile={};'
+    userDeviceMapping: "delete from vnrpt_bhv_user_device_mapping where device_id in ('300728abda0ec6e7', '3008BA68-8B1C-4D07-9FBD-927817FD28D9', '3008CA281CF20000');"
+  insert:
+    modelTotalScore: "INSERT INTO `vnrisk_rule_model_total_score` (`id_account`, `id_borrow`, `total_score`, `updated_by`, `updated_at`, `created_by`, `created_at`, `order_no`, `is_default_score`, `case_status`, `transaction_id`, `scenario_code`, `model_id`, `benchmark_score`)
+                      VALUES ({}, {}, {}, 'system', now(), 'system', now(), 'B200313123457794', 0, 'new', '{}', NULL, NULL, NULL);"
+    userContacts: "INSERT INTO `vnrisk_user_contacts` (`id`, `id_account`, `type`, `first_name`, `middle_name`, `last_name`, `gender`, `mobile_no`, `relationship`, `age`, `birthday`, `email`, `address`, `company`, `created_at`, `created_by`, `updated_at`, `updated_by`, `gender_code`, `relationship_code`, `address_code`, `status`)
+                      VALUES ({}, {}, 'family', NULL, NULL, NULL, 'Nữ', '{}', 'Con', NULL, NULL, NULL, NULL, NULL, now(), 'jf_worker', now(), NULL, '2', '3', NULL, NULL);"
+    applied_contacts: "INSERT INTO `vnrisk_applied_contacts` (`mobile`, `id_account_relative`, `id_account_own`, `relative_cnt`, `created_at`, `created_by`, `updated_at`, `updated_by`)
+                       VALUES ('{}', '{}', '', {}, now(), NULL, now(), NULL);"
+    3devices: "INSERT INTO `vnrpt_bhv_user_device_mapping` (`user_id`, `device_id`, `device_type`, `device_model`, `device_manufacturer`, `earliest_ts`, `latest_ts`, `device_reg`, `device_apply`, `batch_time`, `device_owner`)
+               VALUES
+               	({}, '300728abda0ec6e7', 'android', 'SM-N950U1', 'samsung', now(), '{}', 1, 0, '2019-06-20', 1),
+               	({}, '3008BA68-8B1C-4D07-9FBD-927817FD28D9', 'ios', 'iPhone5,2', 'Apple', now(), '{}', 0, 0, '2019-03-27', 1),
+               	({}, '3008CA281CF20000', 'android', 'MI 2', 'Xiaomi', now(), '{}', 0, 0, '2018-12-22', 1);"
+    2devices: "INSERT INTO `vnrpt_bhv_user_device_mapping` (`user_id`, `device_id`, `device_type`, `device_model`, `device_manufacturer`, `earliest_ts`, `latest_ts`, `device_reg`, `device_apply`, `batch_time`, `device_owner`)
+               VALUES
+               	({}, '300728abda0ec6e7', 'android', 'SM-N950U1', 'samsung', now(), '{}', 1, 0, '2019-06-20', 1),
+               	({}, '3008BA68-8B1C-4D07-9FBD-927817FD28D9', 'ios', 'iPhone5,2', 'Apple', now(), '{}', 0, 0, '2019-03-27', 1);"
+    sharedevice: "INSERT INTO `vnrpt_bhv_user_device_mapping` (`user_id`, `device_id`, `device_type`, `device_model`, `device_manufacturer`, `earliest_ts`, `latest_ts`, `device_reg`, `device_apply`, `batch_time`, `device_owner`)
+                  VALUES
+                  	(10086, '300728abda0ec6e7', 'android', 'SM-N950U1', 'samsung', now(), now(), 1, 0, '2019-06-20', 1);"  # same device id with above 3devices and 2devices first device
+  update:
+    applied_contacts: "update `vnrisk_applied_contacts` set `id_account_relative`='{}', `relative_cnt`={} where `mobile`='{}';"
+
+Mongo:
+  insert:
+    users: {"face_reko": {"search_faces": [],"index_faces": []},"id_account": 10086,"updated_at": '',"performance": {"fst_borrow_id": 3712,"fst_borrow_ts": "2019-03-12 16:43:06","fst_borrow_status": "processing","fst_borrow_loantype": "2","has_noquick_loan": null,"fst_loan_id": null,"fst_loan_ts": null,"fst_loan_loantype": null,"fst_loan_dueat": null,"fst_loan_repaidat": null,"last_loan_id": null,"last_loan_ts": null,"last_loan_loantype": null,"last_loan_dueat": null,"last_loan_repaidat": null,"fst_quick_loan_id": null,"fst_quick_loan_ts": null,"fst_quick_loan_dueat": null,"fst_quick_loan_repaidat": null,"last_quick_loan_id": null,"last_quick_loan_ts": null,"last_quick_loan_dueat": null,"last_quick_loan_repaidat": null,"has_mpf_apply": 0,"has_mpf_suc": 0,"fst_mpf_apply_id": null,"fst_mpf_apply_ts": null,"fst_mpf_suc_id": null,"fst_mpf_suc_ts": null}}
+  update:
+    search_faces_99: [
+      {"face_image_url": "https://nba.S3.com/image/d5773d008d724a22a780a96ebbbebcff.png",
+        "id_account": 10086,
+        "face_matches": [
+        {
+        "confidence": 100,
+        "id_account": 49133895,
+        "face_id": "dd768be2-fb41-475a-87bc-8c978d6c5abe",
+        "image_id": "e9d507d5-53a9-5718-a567-c0059305232f",
+        "similarity": 99.81
+        },
+        {
+        "confidence": 100,
+        "id_account": 49110086,
+        "face_id": "b90d3bf9-c035-469b-b095-1c6431005ff6",
+        "image_id": "6024a4b0-064e-5068-9f3e-b79eab984a44",
+        "similarity": 80.78
+        }],
+        "face_found": true}]
+
+

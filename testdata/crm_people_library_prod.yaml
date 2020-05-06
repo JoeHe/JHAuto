@@ -1,0 +1,47 @@
+ElasticSearch:
+  prod_host: "http://10.10.10.120/_plugin/kibana/api/console/proxy?path="
+  prod_headers: {'Accept': 'text/plain, */*; q=0.01',
+                 'Content-Type': 'application/json',
+                 'User-Agent': 'Mozilla/5.0',
+                 'kbn-version': '6.3.1',
+                 'Host': 'nba.ap-southeast-1.elb.amazonaws.com',
+                 'Origin': 'http://qq.ap-southeast-1.elb.amazonaws.com'}
+  prod_ph_search: "crm_user_profile_alias%2F_search&method=POST"
+  prod_id_search: "id_crm_user_profile_alias%2F_search&method=POST"
+  prod_vn_search: "vn_crm_user_profile_alias%2F_search&method=POST"
+  prod_ph_stats: "crm_user_profile_alias%2F_stats&method=GET"
+  prod_id_stats: "id_crm_user_profile_alias%2F_stats&method=GET"
+  prod_vn_stats: "vn_crm_user_profile_alias%2F_stats&method=GET"
+
+
+TagValuesUpdate:
+  kibana:
+    Philippines:
+      first_application_loantype: '{"size": 1, "query": {"bool": {"must": [{"terms": {"first_application_loantype": ["%s"],"boost": 1}}],"adjust_pure_negative": true,"boost": 1}}}'
+      second_approved_loantype: '{"size": 1, "query": {"bool": {"must": [{"terms": {"second_approved_loantype": ["%s"],"boost": 1}}],"adjust_pure_negative": true,"boost": 1}}}'
+      first_approved_loantype: '{"size": 1, "query": {"bool": {"must": [{"terms": {"first_approved_loantype": ["%s"],"boost": 1}}],"adjust_pure_negative": true,"boost": 1}}}'
+  wide:
+    Philippines:
+      first_application_loantype: "select count(1) from crm_ext.user_tag_wide where first_application_loantype='{}'"
+      second_approved_loantype: "select count(1) from crm_ext.user_tag_wide where second_approved_loantype='{}'"
+      first_approved_loantype: "select count(1) from crm_ext.user_tag_wide where first_approved_loantype='{}'"
+    Indonesia:
+    Vietnam:
+  checkValues:
+    Philippines:
+      first_application_loantype: ['Online CF', 'Quick Loan', 'Others', 'Offline CF', 'Employee Loan', 'MPF']
+      second_approved_loantype: ['Quick Loan', 'Others', 'Employee Loan', 'Offline CF', 'MPF', 'Concurrent', 'Online CF', 'Extend Loan']
+      first_approved_loantype: ['MPF', 'Quick Loan', 'Online CF', 'Employee Loan', 'Offline CF']
+
+Wide:
+  Philippines:
+    totalSize: "select count(1) from crm_ext.user_tag_wide"
+  Indonesia:
+    totalSize: "select count(1) from idcrm_ext.user_tag_wide"
+  Vietnam:
+    totalSize: "select count(1) from vncrm_ext.user_tag_wide"
+
+
+
+
+

@@ -1,0 +1,211 @@
+# check out these url in rancher
+BaseUrl: "http:/1.1.1.126"
+FrontendPort: ":30303"
+BackendPort:
+  Philippines: ":20215"
+  Indonesia: ":20220"
+  Vietnam: ":20258"
+
+user: &user 'mike.kordan@qq.com'
+
+login:
+  path: "/login"
+  header: {'Accept': 'application/json, text/plain',
+           'Connection': 'keep-alive',
+           'Content-Type': 'application/json;charset=UTF-8',
+           'User-Agent': 'Mozilla/5.0'}
+  payload: {'email': *user, 'password': '123'}
+
+
+search:
+  path: "/rulemng/rule?searchStr="
+  header: &search_header {'Accept': 'application/json, text/plain',
+           'Connection': 'keep-alive',
+           'Content-Type': 'application/json;charset=UTF-8',
+           'User-Agent': 'Mozilla/5.0',
+           'Region': 'US',
+           'username': *user}
+  params: {'pageNo': 1, 'pageSize': 10}
+  searchGroupPara:
+    Philippines:
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 1}
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 3}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 2, 'ruleId': 5}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 3, 'ruleId': 88888}  # invalid ruleID
+    Indonesia:
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 1}
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 3}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 3, 'ruleId': 25}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 2, 'ruleId': 99999}  # invalid ruleID
+    Vietnam:
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 1}
+      - {'pageNo': 1, 'pageSize': 300, 'groups': 3}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 2, 'ruleId': 10}
+      - {'pageNo': 1, 'pageSize': 10, 'groups': 3, 'ruleId': 99999}  # invalid ruleID
+
+
+get_rule:
+  path: "/rulemng/rule/"
+  header: *search_header
+  rule_id:
+    - '-3'
+
+
+update_rule:
+  path: "/rulemng/rule"
+  header: {"Accept": "application/json, text/plain, */*",
+           "Accept-Encoding": "gzip, deflate",
+           "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7",
+           "Cache-Control": "no-cache",
+           "Connection": "keep-alive",
+           "Content-Type": "application/json",
+           "Pragma": "no-cache",
+           "Region": 'Philippines',
+           "username": *user
+  }
+  payloadValid: {
+    "ruleId": -2,
+    "ruleVersion": "v2020",
+    "ruleBusinessType": "Blacklist",
+    "ruleInfoType": "Blacklist",
+    "ruleTopicId": "",
+    "droolsRuleName": "drools 155",
+    "droolsRule": "drools 155",
+    "droolsBizClass": "",
+    "blockingDay": 0,
+    "outputType": "reject",
+    "ruleDescription": "jh316",
+    "updatedBy": *user,
+    "weight": 1,
+    "outputType2": "reject",
+    "msgId": 0,
+    "ratio": 1,
+    "messageParamsHandler": "",
+    "roundId": "1",
+    "apiService": '{"ids": [1, 2, 3, 4], "people":{"Tom": 12, "Jerry": 15}, "type": "test test ggg"}',
+    "ruleValid": 1}  #valid
+  payloadInValid: {
+    "ruleId": 1,
+    "ruleVersion": "v202001",
+    "ruleBusinessType": "Contact",
+    "ruleInfoType": "Contact",
+    "ruleTopicId": "",
+    "droolsRuleName": "drools 20200103",
+    "droolsRule": "drools 20200103",
+    "droolsBizClass": "",
+    "blockingDay": 90,
+    "outputType": "approve_p0",
+    "ruleDescription": "jh20200103",
+    "updatedBy": *user,
+    "weight": 1,
+    "outputType2": "approve",
+    "msgId": 0,
+    "ratio": 1,
+    "messageParamsHandler": "",
+    "roundId": "1",
+    "apiService": "",
+    "ruleValid": 0}  #Invalid
+
+
+publish_rule:
+  path: "/rulemng/rule/_publish"
+  header: *search_header
+
+
+
+# Kyc Reason
+searchKyc:
+  path: "/kycreasonmng/kycreason"
+  header: *search_header
+  validParams:  # valid exist kyc reason Flipping ids
+    Philippines: {'ids': '1,2,3','pageNo': 1, 'pageSize': 20}
+    Indonesia: {'ids': '32,55,60','pageNo': 1, 'pageSize': 20}
+    Vietnam:
+  invalidParams: {'ids': '102433,99999','pageNo': 1, 'pageSize': 20} # inValid kyc reason Flipping ids
+
+get_kyc:
+  path: "/rulemng/rule/"
+  header: *search_header
+  rule_id:
+    - '-3'
+
+update_kyc:
+  path: "/kycreasonmng/save"
+  header: *search_header
+  payloadValid:
+    Philippines:
+      {"id":"4",
+      "reasonId":"",
+      "flippingId":"1",  # Flipping id
+      "blockingDay":"60",
+      "approveRate":"60",
+      "approveLine":"125.00",
+      "scoreAdj":"",
+      "scoreDefault":"100.00",
+      "isValid":"1",
+      "updatedBy":*user,
+      "topicType":"RejectReason",
+      "topicValue":"123",
+      "applyAmountMin":"85",
+      "applyAmountMax":"550"}
+    Indonesia:
+      {"id":"2",
+       "reasonId":"",
+       "flippingId":"34", # Flipping id
+       "blockingDay":"30",
+       "approveRate":"85",
+       "approveLine":"125.00",
+       "scoreAdj":"",
+       "scoreDefault":"500.00",
+       "isValid":"1",
+       "updatedBy":*user,
+       "topicType":"RejectReason",
+       "topicValue":"6",
+       "applyAmountMin":"2000",
+       "applyAmountMax":"8500"}
+    Vietnam:
+
+  payloadInValid:
+    Philippines:
+      {"id":"6",
+       "reasonId":"",
+       "flippingId":"3", # Flipping id
+       "blockingDay":"90",
+       "approveRate":"90",
+       "approveLine":"300.00",
+       "scoreAdj":"",
+       "scoreDefault":"350.00",
+       "isValid":"0",
+       "updatedBy":*user,
+       "topicType":"RejectReason",
+       "topicValue":"6",
+       "applyAmountMin":"0",
+       "applyAmountMax":"999"}
+    Indonesia:
+      {"id":"15",
+       "reasonId":"",
+       "flippingId":"49", # Flipping id
+       "blockingDay":"99",
+       "approveRate":"50",
+       "approveLine":"600.00",
+       "scoreAdj":"",
+       "scoreDefault":"520.00",
+       "isValid":"0",
+       "updatedBy":*user,
+       "topicType":"RejectReason",
+       "topicValue":"23",
+       "applyAmountMin":"1111",
+       "applyAmountMax":"99999999"}
+    Vietnam:
+
+publish_kyc:
+  path: "/kycreasonmng/kycreason/_publish"
+  header: *search_header
+
+reset_kyc:
+  path: "/kycreasonmng/kycreason/{}/_reset"
+  header: *search_header
+
+
+
+

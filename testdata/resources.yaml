@@ -1,0 +1,74 @@
+Mysql:
+  # For Rule Manage
+  RiskDB:
+    host: 'qq.com.cn'
+    user:  'dev'
+    password: 'pwd'
+    db:
+      risk_managent:  'risk_managent'
+      crm_db: 'crm_db'
+      Philippines:
+        risk_dev_tmp: 'risk_dev_tmp'
+        tbPrefix: 'ph'
+      Indonesia:
+        risk_dev_tmp: 'risk_dev_tmp_id'
+        tbPrefix: 'id'
+      Vietnam:
+        risk_dev_tmp: 'risk_dev_tmp_vn'
+        tbPrefix: 'vn'
+
+
+# For Rule Score, Risk Pipeline
+StagingRiskDB:
+  user: 'staging'
+  password: '123'
+  db: 'risk_managent'
+
+  Philippines:
+    host: ''
+    tbPrefix: 'ph'
+  Indonesia:
+    host: ''
+    tbPrefix: 'id'
+  Vietnam:
+    host: '1.1.1.21'
+    port: 32398
+    tbPrefix: 'vn'
+
+  tables: # check tables
+    borrow_case: 'risk_borrow_case'
+    model: 'risk_model'
+    model_total_score: 'risk_rule_model_total_score'
+    model_feature: 'risk_model_feature'
+    model_mapping: 'risk_model_mapping'
+    model_scenario: 'risk_model_scenario'
+    result_send_log: 'risk_risk_result_send_log'
+    riskcontrol_resfin: 'risk_riskcontrol_resfin'
+
+
+# For Rule Score, Risk Pipeline
+TradeDB:
+  user: 'db'
+  password: '123'
+  db: 'trade'
+
+  Philippines:
+  Indonesia:
+  Vietnam:
+    host: '1.1.1.2'
+
+  tables:
+    BorrowOrders: 'BorrowOrders'
+    Persons: 'Persons'
+
+
+MongoDB:
+  MONGO_URL: "mongodb://root:nba.amazonaws.com:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false"
+  MONGO_DB_NAME:
+    Philippines: 'ph_risk_engine'
+    Indonesia: 'id_risk_engine'
+    Vietnam: 'vn_risk_engine'
+
+
+
+

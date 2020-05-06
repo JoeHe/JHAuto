@@ -1,0 +1,1080 @@
+
+Region: &Region 'US'
+
+ElasticSearch:
+  host: "http://10.10.10.128:8280"
+  headers: {'Accept': 'application/json, text/javascript, */*; q=0.01',
+              'Content-Type': 'application/json',
+              'User-Agent': 'Mozilla/5.0'}
+  us_search: "/crm_user_profile_alias/_search"
+  jp_search: "/jp_crm_user_profile_alias/_search"
+  cn_search: "/cn_crm_user_profile_alias/_search"
+  us_stats: "/crm_user_profile_alias/_stats"
+  jp_stats: "/jp_crm_user_profile_alias/_stats"
+  cn_stats: "/cn_crm_user_profile_alias/_stats"
+
+
+ESQuery:
+  US:
+    - location: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"location","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_applied_product_type: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"last_applied_product_type":{"query":"MPF","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Offline CF","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Employee Loan","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Quick Loan","slop":0,"zero_terms_query":"NONE","boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_date_to_referral: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"first_date_to_referral","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_referrals: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_referrals":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_offline_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_offline_cf_disbursement","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_cash_loan_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_cash_loan_disbursement","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_online_cf_disbursement : '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_online_cf_disbursement","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cf_outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cash_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cash_outstanding_balance":{"from":null,"to":9.23,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - online_cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"online_cf_outstanding_balance":{"from":null,"to":6.5,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - mpf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"mpf_outstanding_balance":{"from":2.0,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_transaction_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_transaction_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_cash_loan_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_cash_loan_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_offline_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_offline_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_online_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_online_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_mpf_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_mpf_transaction":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_mpf_offline_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_mpf_offline_transaction","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_mpf_online_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_mpf_online_transaction","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_cash_loan":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_offline_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_online_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_mpf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_any_product: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_any_product":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+
+  JP:
+    - residentialcity: '{"size":1,"query":{"bool":{"must":[{"terms":{"residentialcity":["Jakarta Barat","Banjarmasin","Surabaya","Cilegon","Karawang","Sidoarjo"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - monthly_income: '{"size":1,"query":{"bool":{"should":[{"range":{"monthly_income":{"from":6800500,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - device_of_first_apply: '{"size":1,"query":{"bool":{"must":[{"terms":{"device_of_first_apply":["android"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - mpf_first_credit_apply_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"mpf_first_credit_apply_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - mpf_first_credit_approval_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"mpf_first_credit_approval_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - mpf_first_successful_transaction_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"mpf_first_successful_transaction_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - number_of_logins_in_the_past_1_month: '{"size":1,"query":{"bool":{"must":[{"range":{"number_of_logins_in_the_past_1_month":{"from":1,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - number_of_logins_in_the_past_3_months: '{"size":1,"query":{"bool":{"must":[{"range":{"number_of_logins_in_the_past_3_months":{"from":2,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - number_of_logins_in_the_past_6_months: '{"size":1,"query":{"bool":{"must":[{"range":{"number_of_logins_in_the_past_6_months":{"from":3,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_app_opened_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_app_opened_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - last_login_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_login_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_date_to_get_approved_of_credit_line: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_date_to_get_approved_of_credit_line","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_risk_score: '{"size":1,"query":{"bool":{"should":[{"range":{"latest_risk_score":{"from":600,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - first_date_to_fill_in_bank_account: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_date_to_fill_in_bank_account","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - last_application_date_of_concurrent_loan: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_application_date_of_concurrent_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - isapplicant: '{"size":1,"query":{"bool":{"must":[{"terms":{"isapplicant":["Y"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - loan_balance: '{"size":1,"query":{"bool":{"must":[{"range":{"loan_balance":{"from":1.0,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_approved_date: '{"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"first_approved_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_approved_date: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"second_approved_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_application_date: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_application_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cf_outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cash_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cash_outstanding_balance":{"from":null,"to":9.23,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - online_cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"online_cf_outstanding_balance":{"from":null,"to":6.5,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - mpf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"mpf_outstanding_balance":{"from":2.0,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_transaction_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_transaction_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_cash_loan_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_cash_loan_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_offline_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_offline_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_online_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_online_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_mpf_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_mpf_transaction":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_mpf_offline_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_mpf_offline_transaction","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_mpf_online_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_mpf_online_transaction","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_cash_loan":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_offline_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_online_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_mpf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_any_product: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_any_product":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_applied_product_type: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"last_applied_product_type":{"query":"MPF","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Offline CF","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Employee Loan","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Quick Loan","slop":0,"zero_terms_query":"NONE","boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+
+  CN:
+#    - loan_balance: '{"size":1,"query":{"bool":{"must":[{"range":{"loan_balance":{"from":1.0,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - residential_province: '{"size":1,"query":{"bool":{"must":[{"terms":{"residentialprovince":["Tỉnh Long An","Thành phố Cần Thơ","Tỉnh Thái Nguyên","Tỉnh Phú Thọ","Tỉnh Thanh Hóa","Tỉnh Hoà Bình","Tỉnh Bình Phước","Tỉnh Cà Mau","Tỉnh Cao Bằng"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - permanent_province: '{"size":1,"query":{"bool":{"must":[{"terms":{"permanentprovince":["Tỉnh Long An","Thành phố Cần Thơ","Tỉnh Thái Nguyên","Tỉnh Phú Thọ","Tỉnh Thanh Hóa","Tỉnh Hoà Bình","Tỉnh Bình Phước","Tỉnh Cà Mau","Tỉnh Cao Bằng"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - work_province: '{"size":1,"query":{"bool":{"must":[{"terms":{"workprovince":["Tỉnh Long An","Thành phố Cần Thơ","Tỉnh Thái Nguyên","Tỉnh Phú Thọ","Tỉnh Thanh Hóa","Tỉnh Hoà Bình","Tỉnh Bình Phước","Tỉnh Cà Mau","Tỉnh Cao Bằng"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - gender: '{"size":1,"query":{"bool":{"must":[{"terms":{"gender":["Nam"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - birthday: '{"size":1,"query":{"bool":{"must":[{"range":{"birthday":{"from":null,"to":883612800000,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - maritalstatus: '{"size":1,"query":{"bool":{"must_not":[{"terms":{"maritalstatus":["Góa","Đã kết hôn"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - education: '{"size":1,"query":{"bool":{"must":[{"terms":{"education":["trung học","thạc sĩ hoặc cao hơn","trung cấp"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - occupation: '{"size":1,"query":{"bool":{"must":[{"terms":{"occupation":["Quản lý","Nhân viên hợp đồng","Nhân viên văn phòng"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - property: '{"size":1,"query":{"bool":{"must":[{"terms":{"property":["Tôi có cả nhà, xe ô tô và xe máy","Tôi không có nhà, ô tô hay xe máy","Tôi sở hữu cả nhà và xe"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - install_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"install_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - start_filling_profile_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"start_filling_profile_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - complete_profile_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"complete_profile_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_loan_submitted_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_loan_submitted_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_loan_funded_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_loan_funded_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_loan_repaid_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_loan_repaid_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_loan_submitted_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"second_loan_submitted_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_loan_funded_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"second_loan_funded_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_loan_repaid_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"second_loan_repaid_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - isapplicant: '{"size":1,"query":{"bool":{"must":[{"terms":{"isapplicant":["Y"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_application_status: '{"size":1,"query":{"bool":{"must":[{"terms":{"last_application_status":["Processing","Submitted","Success"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - channel_name: '{"size":1,"query":{"bool":{"must_not":[{"terms":{"channel_name":["Viettel SMS","No Codes"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - channel_category: '{"size":1,"query":{"bool":{"must":[{"terms":{"channel_category":["MGM","Open Market Organic"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_approved_loantype: '{"size":1,"query":{"bool":{"must":[{"terms":{"first_approved_loantype":["FiniziQuick"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_approved_loantype: '{"size":1,"query":{"bool":{"must":[{"terms":{"second_approved_loantype":["FiniziLoan"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - has_made_referral: '{"size":1,"query":{"bool":{"must":[{"terms":{"has_made_referral":["Y"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_application_loantype: '{"size":1,"query":{"bool":{"must":[{"terms":{"first_application_loantype":["Cashaloan"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_approved_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_approved_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - second_approved_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"second_approved_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - device_of_first_apply: '{"size":1,"query":{"bool":{"must":[{"terms":{"device_of_first_apply":["android","ios"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - NumberOfLoginInPast1Month: '{"size":1,"query":{"bool":{"must":[{"range":{"number_of_logins_in_the_past_1_month":{"from":1,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - NumberOfLoginInPast3Month: '{"size":1,"query":{"bool":{"must":[{"range":{"number_of_logins_in_the_past_3_months":{"from":2,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - NumberOfLoginInPast6Month: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"number_of_logins_in_the_past_6_months":{"from":3,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_app_opened_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_app_opened_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_login_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_login_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_application_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"last_application_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - FirstDateFillInBankAccount: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"first_date_to_fill_in_bank_account","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - registration_date: '{"size":1,"query":{"bool":{"must":[{"exists":{"field":"registration_date","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_applied_product_type: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"last_applied_product_type":{"query":"Offline CF","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"last_applied_product_type":{"query":"Quick Loan","slop":0,"zero_terms_query":"NONE","boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - first_date_to_referral: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"first_date_to_referral","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_referrals: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_referrals":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - date_of_first_cash_loan_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"date_of_first_cash_loan_disbursement","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cf_outstanding_balance":{"from":1.0,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cash_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cash_outstanding_balance":{"from":null,"to":9.23,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - online_cf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"online_cf_outstanding_balance":{"from":null,"to":6.5,"include_lower":true,"include_upper":false,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+#    - mpf_outstanding_balance: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"mpf_outstanding_balance":{"from":2.0,"to":null,"include_lower":false,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - residentialcity: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"should":[{"match_phrase":{"residentialcity":{"query":"Quận Tân Bình","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"residentialcity":{"query":"Huyện Bình Chánh","slop":0,"zero_terms_query":"NONE","boost":1.0}}},{"match_phrase":{"residentialcity":{"query":"Huyện Đa Krông","slop":0,"zero_terms_query":"NONE","boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_disbursement_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_disbursement_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_transaction_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_transaction_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_cash_loan_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_cash_loan_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_offline_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_offline_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_online_cf_disbursement: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_online_cf_disbursement":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - cumulative_number_of_mpf_transaction: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"cumulative_number_of_mpf_transaction":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - last_full_repayment_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"last_full_repayment_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_cash_loan","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_offline_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_online_cf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - latest_due_date_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"bool":{"must_not":[{"bool":{"must_not":[{"exists":{"field":"latest_due_date_of_mpf","boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_cash_loan: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_cash_loan":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_offline_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_offline_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_online_cf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_online_cf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_mpf: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_mpf":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+    - days_past_due_of_any_product: '{"from":0,"size":1,"query":{"bool":{"filter":[{"bool":{"must":[{"range":{"days_past_due_of_any_product":{"from":1,"to":null,"include_lower":true,"include_upper":true,"boost":1.0}}}],"adjust_pure_negative":true,"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+
+# 和上面的ESQuery一一对应，查询结果应一致
+UserTagWide:
+  US:
+    - location: 'select count(1) from crmtest_ext.user_tag_wide where location is not null'
+    - last_applied_product_type: "select count(1) from crmtest_ext.user_tag_wide where last_applied_product_type in ('MPF', 'Offline CF', 'Employee Loan', 'Quick Loan');"
+    - first_date_to_referral: "select count(1) from crmtest_ext.user_tag_wide where first_date_to_referral is not null;"
+    - cumulative_number_of_referrals: "select count(1)  from crmtest_ext.user_tag_wide where cumulative_number_of_referrals>=1;  "
+    - date_of_first_offline_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_offline_cf_disbursement is not null;'
+    - date_of_first_cash_loan_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is not null;'
+    - date_of_first_online_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_online_cf_disbursement is not null;'
+    - outstanding_balance: 'select count(1) from  crmtest_ext.user_tag_wide where outstanding_balance>=1.0;'
+    - cf_outstanding_balance: 'select count(1) from  crmtest_ext.user_tag_wide where cf_outstanding_balance>=1.0;'
+    - cash_outstanding_balance: 'select count(1) from  crmtest_ext.user_tag_wide where cash_outstanding_balance<9.23;'
+    - online_cf_outstanding_balance: 'select count(1) from  crmtest_ext.user_tag_wide where online_cf_outstanding_balance<6.5;'
+    - mpf_outstanding_balance: 'select count(1) from  crmtest_ext.user_tag_wide where mpf_outstanding_balance>2.0;'
+    - last_disbursement_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+    - last_disbursement_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+    - last_disbursement_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+    - last_transaction_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+    - cumulative_number_of_cash_loan_disbursement: "select count(1)  from crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=1;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1)  from crmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement>=1;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1)  from crmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement>=1;"
+    - cumulative_number_of_mpf_transaction: "select count(1)  from crmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction>=1;"
+    - last_full_repayment_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+    - last_full_repayment_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+    - last_full_repayment_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+    - last_full_repayment_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+    - latest_due_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+    - latest_due_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+    - latest_due_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+    - latest_due_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+    - date_of_first_mpf_offline_transaction: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is not null;'
+    - date_of_first_mpf_online_transaction: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is not null;'
+    - days_past_due_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1;'
+    - days_past_due_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where days_past_due_of_offline_cf>=1;'
+    - days_past_due_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where days_past_due_of_online_cf>=1;'
+    - days_past_due_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where days_past_due_of_mpf>=1;'
+    - days_past_due_of_any_product: 'select count(1) from crmtest_ext.user_tag_wide where days_past_due_of_any_product>=1;'
+
+  JP:
+    - residentialcity: "select count(1) from idcrmtest_ext.user_tag_wide where residentialcity in ('Jakarta Barat','Banjarmasin','Surabaya','Cilegon','Karawang','Sidoarjo')"
+    - monthly_income: "select count(1) from idcrmtest_ext.user_tag_wide where monthly_income>6800500"
+    - device_of_first_apply: "select count(1) from idcrmtest_ext.user_tag_wide where device_of_first_apply='android'"
+    - mpf_first_credit_apply_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_apply_date is not null"
+    - mpf_first_credit_approval_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_approval_date is not null"
+    - mpf_first_successful_transaction_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_successful_transaction_date is not null"
+    - number_of_logins_in_the_past_1_month: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month>1"
+    - number_of_logins_in_the_past_3_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months>2"
+    - number_of_logins_in_the_past_6_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months>3"
+    - last_app_opened_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_app_opened_date is not null"
+#    - last_login_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_login_date is not null"
+    - first_date_to_get_approved_of_credit_line: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_get_approved_of_credit_line is not null"
+    - latest_risk_score: "select count(1) from idcrmtest_ext.user_tag_wide where latest_risk_score>600"
+#    - first_date_to_fill_in_bank_account: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is not null"
+#    - last_application_date_of_concurrent_loan: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date_of_concurrent_loan is not null"
+    - isapplicant: "select count(1) from idcrmtest_ext.user_tag_wide where isapplicant='Y'"
+#    - loan_balance: "select count(1) from idcrmtest_ext.user_tag_wide where loan_balance>1.0"
+    - first_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where first_approved_date is not null;"
+    - second_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where second_approved_date is not null;"
+    - last_application_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date is not null;"
+    - outstanding_balance: 'select count(1) from  idcrmtest_ext.user_tag_wide where outstanding_balance>=1.0;'
+    - cf_outstanding_balance: 'select count(1) from  idcrmtest_ext.user_tag_wide where cf_outstanding_balance>=1.0;'
+    - cash_outstanding_balance: 'select count(1) from  idcrmtest_ext.user_tag_wide where cash_outstanding_balance<9.23;'
+    - online_cf_outstanding_balance: 'select count(1) from  idcrmtest_ext.user_tag_wide where online_cf_outstanding_balance<6.5;'
+    - mpf_outstanding_balance: 'select count(1) from  idcrmtest_ext.user_tag_wide where mpf_outstanding_balance>2.0;'
+    - last_disbursement_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+    - last_disbursement_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+    - last_disbursement_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+    - last_transaction_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+    - cumulative_number_of_cash_loan_disbursement: "select count(1)  from idcrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=1;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1)  from idcrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement>=1;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1)  from idcrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement>=1;"
+    - cumulative_number_of_mpf_transaction: "select count(1)  from idcrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction>=1;"
+    - last_full_repayment_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+    - last_full_repayment_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+    - last_full_repayment_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+    - last_full_repayment_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+    - latest_due_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+    - latest_due_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+    - latest_due_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+    - latest_due_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+    - date_of_first_mpf_offline_transaction: 'select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is not null;'
+    - date_of_first_mpf_online_transaction: 'select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is not null;'
+    - days_past_due_of_cash_loan: 'select count(1)  from idcrmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1;'
+    - days_past_due_of_offline_cf: 'select count(1)  from idcrmtest_ext.user_tag_wide where days_past_due_of_offline_cf>=1;'
+    - days_past_due_of_online_cf: 'select count(1)  from idcrmtest_ext.user_tag_wide where days_past_due_of_online_cf>=1;'
+    - days_past_due_of_mpf: 'select count(1)  from idcrmtest_ext.user_tag_wide where days_past_due_of_mpf>=1;'
+    - days_past_due_of_any_product: 'select count(1)  from idcrmtest_ext.user_tag_wide where days_past_due_of_any_product>=1;'
+    - last_applied_product_type: "select count(1) from idcrmtest_ext.user_tag_wide where last_applied_product_type in ('MPF', 'Offline CF', 'Employee Loan', 'Quick Loan');"
+
+  CN:
+#    - loan_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where loan_balance>1.0'
+    - residential_province: "select count(*) from vncrmtest_ext.user_tag_wide where residentialprovince in ('Tỉnh Long An','Thành phố Cần Thơ','Tỉnh Thái Nguyên','Tỉnh Phú Thọ','Tỉnh Thanh Hóa','Tỉnh Hoà Bình','Tỉnh Bình Phước','Tỉnh Cà Mau','Tỉnh Cao Bằng')"
+    - permanent_province: "select count(*) from vncrmtest_ext.user_tag_wide where permanentprovince in ('Tỉnh Long An','Thành phố Cần Thơ','Tỉnh Thái Nguyên','Tỉnh Phú Thọ','Tỉnh Thanh Hóa','Tỉnh Hoà Bình','Tỉnh Bình Phước','Tỉnh Cà Mau','Tỉnh Cao Bằng')"
+    - work_province: "select count(*) from vncrmtest_ext.user_tag_wide where workprovince in ('Tỉnh Long An','Thành phố Cần Thơ','Tỉnh Thái Nguyên','Tỉnh Phú Thọ','Tỉnh Thanh Hóa','Tỉnh Hoà Bình','Tỉnh Bình Phước','Tỉnh Cà Mau','Tỉnh Cao Bằng')"
+    - gender: "select count(*) from vncrmtest_ext.user_tag_wide where gender='Nam'"
+    - birthday: "select count(1) from vncrmtest_ext.user_tag_wide where birthday<'19980101'"
+    - maritalstatus: "select count(1) from vncrmtest_ext.user_tag_wide where maritalstatus not in ('Góa','Đã kết hôn') or maritalstatus is null"
+    - education: "select count(1) from vncrmtest_ext.user_tag_wide where education in ('trung học','thạc sĩ hoặc cao hơn','trung cấp')"
+    - occupation: "select count(1) from vncrmtest_ext.user_tag_wide where occupation in ('Quản lý','Nhân viên hợp đồng','Nhân viên văn phòng')"
+    - property: "select count(1) from vncrmtest_ext.user_tag_wide where property in ('Tôi có cả nhà, xe ô tô và xe máy','Tôi không có nhà, ô tô hay xe máy','Tôi sở hữu cả nhà và xe')"
+    - install_date: 'select count(1) from vncrmtest_ext.user_tag_wide where install_date is not null'
+    - start_filling_profile_date: 'select count(1) from vncrmtest_ext.user_tag_wide where start_filling_profile_date is not null'
+    - complete_profile_date: 'select count(1) from vncrmtest_ext.user_tag_wide where complete_profile_date is not null'
+    - first_loan_submitted_date: 'select count(1) from vncrmtest_ext.user_tag_wide where first_loan_submitted_date is not null'
+    - first_loan_funded_date: 'select count(1) from vncrmtest_ext.user_tag_wide where first_loan_funded_date is not null'
+    - first_loan_repaid_date: 'select count(1) from vncrmtest_ext.user_tag_wide where first_loan_repaid_date is not null'
+    - second_loan_submitted_date: 'select count(1) from vncrmtest_ext.user_tag_wide where second_loan_submitted_date is not null'
+    - second_loan_funded_date: 'select count(1) from vncrmtest_ext.user_tag_wide where second_loan_funded_date is not null'
+    - second_loan_repaid_date: 'select count(1) from vncrmtest_ext.user_tag_wide where second_loan_repaid_date is not null'
+    - isapplicant: "select count(1) from vncrmtest_ext.user_tag_wide where isapplicant='Y'"
+    - last_application_status: "select count(1) from vncrmtest_ext.user_tag_wide where last_application_status in ('Processing','Submitted','Success')"
+    - channel_name: "select count(1) from vncrmtest_ext.user_tag_wide where channel_name not in ('Viettel SMS','No Codes') or channel_name is null"
+    - channel_category: "select count(1) from vncrmtest_ext.user_tag_wide where channel_category in ('MGM','Open Market Organic')"
+    - first_approved_loantype: "select count(1) from vncrmtest_ext.user_tag_wide where first_approved_loantype in ('FiniziQuick')"
+    - second_approved_loantype: "select count(1) from vncrmtest_ext.user_tag_wide where second_approved_loantype='FiniziLoan'"
+    - has_made_referral: "select count(1) from vncrmtest_ext.user_tag_wide where has_made_referral='Y'"
+    - first_application_loantype: "select count(1) from vncrmtest_ext.user_tag_wide where first_application_loantype='Cashaloan'"
+    - first_approved_date: 'select count(1) from vncrmtest_ext.user_tag_wide where first_approved_date is not null'
+    - second_approved_date: 'select count(1) from vncrmtest_ext.user_tag_wide where second_approved_date is not null'
+    - device_of_first_apply: "select count(1) from vncrmtest_ext.user_tag_wide where device_of_first_apply in ('android','ios')"
+    - NumberOfLoginInPast1Month: 'select count(1) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month>1'
+    - NumberOfLoginInPast3Month: 'select count(1) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months>2'
+    - NumberOfLoginInPast6Month: 'select count(1) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months>=3'
+    - last_app_opened_date: 'select count(1) from vncrmtest_ext.user_tag_wide where last_app_opened_date is not null'
+    - last_login_date: 'select count(1) from vncrmtest_ext.user_tag_wide where last_login_date is not null'
+    - last_application_date: 'select count(1) from vncrmtest_ext.user_tag_wide where last_application_date is not null'
+    - FirstDateFillInBankAccount: 'select count(1) from vncrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is not null'
+    - registration_date: 'select count(1) from vncrmtest_ext.user_tag_wide where registration_date is not null'
+    - last_applied_product_type: "select count(1) from vncrmtest_ext.user_tag_wide where last_applied_product_type in ('Offline CF', 'Quick Loan');"
+    - first_date_to_referral: "select count(1) from vncrmtest_ext.user_tag_wide where first_date_to_referral is not null;"
+    - cumulative_number_of_referrals: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_referrals>=1;  "
+    - date_of_first_cash_loan_disbursement: 'select count(1) from vncrmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is not null;'
+    - outstanding_balance: 'select count(1) from  vncrmtest_ext.user_tag_wide where outstanding_balance>=1.0;'
+#    - cf_outstanding_balance: 'select count(1) from  vncrmtest_ext.user_tag_wide where cf_outstanding_balance>=1.0;'
+    - cash_outstanding_balance: 'select count(1) from  vncrmtest_ext.user_tag_wide where cash_outstanding_balance<9.23;'
+#    - online_cf_outstanding_balance: 'select count(1) from  vncrmtest_ext.user_tag_wide where online_cf_outstanding_balance<6.5;'
+#    - mpf_outstanding_balance: 'select count(1) from  vncrmtest_ext.user_tag_wide where mpf_outstanding_balance>2.0;'
+    - residentialcity: "select count(1) from vncrmtest_ext.user_tag_wide where residentialcity in ('Quận Tân Bình','Huyện Bình Chánh','Huyện Đa Krông');"
+    - last_disbursement_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+    - last_disbursement_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+    - last_disbursement_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+    - last_transaction_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+    - cumulative_number_of_cash_loan_disbursement: "select count(1)  from vncrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=1;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1)  from vncrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement>=1;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1)  from vncrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement>=1;"
+    - cumulative_number_of_mpf_transaction: "select count(1)  from vncrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction>=1;"
+    - last_full_repayment_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+    - last_full_repayment_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+    - last_full_repayment_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+    - last_full_repayment_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+    - latest_due_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+    - latest_due_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+    - latest_due_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+    - latest_due_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+    - days_past_due_of_cash_loan: 'select count(1)  from vncrmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1;'
+    - days_past_due_of_offline_cf: 'select count(1)  from vncrmtest_ext.user_tag_wide where days_past_due_of_offline_cf>=1;'
+    - days_past_due_of_online_cf: 'select count(1)  from vncrmtest_ext.user_tag_wide where days_past_due_of_online_cf>=1;'
+    - days_past_due_of_mpf: 'select count(1)  from vncrmtest_ext.user_tag_wide where days_past_due_of_mpf>=1;'
+    - days_past_due_of_any_product: 'select count(1)  from vncrmtest_ext.user_tag_wide where days_past_due_of_any_product>=1;'
+
+# user_tag_storage and user_tag_wide tag compare sql
+StorageWideQuery:
+  Storage:
+    US:
+      - location: "select count(1) from crmtest_ext.user_tag_storage where tag_id='location' and tag_str_value is not null"
+      - gender: "select count(*) from crmtest_ext.user_tag_storage where tag_id='gender' and tag_str_value is not null"
+      - last_applied_product_type: "select count(1) from crmtest_ext.user_tag_storage where tag_id='last_applied_product_type' and tag_str_value is not null"
+      - first_date_to_referral: "select count(1) from (select user_id,max(case when tag_id = 'first_date_to_referral' then tag_date_value end) as first_date_to_referral
+                                 from crmtest_ext.user_tag_storage where tag_id in ('first_date_to_referral') group by user_id) a where first_date_to_referral is not null;"
+      - cumulative_number_of_referrals: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_referrals' then tag_str_value end) as cumulative_number_of_referrals
+                                         from crmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_referrals') group by user_id) a where cumulative_number_of_referrals is not null;"
+      - date_of_first_offline_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_offline_cf_disbursement' then tag_date_value end) as date_of_first_offline_cf_disbursement
+                                                from crmtest_ext.user_tag_storage where tag_id in ('date_of_first_offline_cf_disbursement') group by user_id) a where date_of_first_offline_cf_disbursement is not null;"
+      - date_of_first_cash_loan_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_cash_loan_disbursement' then tag_date_value end) as date_of_first_cash_loan_disbursement
+                                               from crmtest_ext.user_tag_storage where tag_id in ('date_of_first_cash_loan_disbursement') group by user_id) a where date_of_first_cash_loan_disbursement is not null;"
+      - date_of_first_online_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_online_cf_disbursement' then tag_date_value end) as date_of_first_online_cf_disbursement
+                                               from crmtest_ext.user_tag_storage where tag_id in ('date_of_first_online_cf_disbursement') group by user_id) a where date_of_first_online_cf_disbursement is not null;"
+      - outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'outstanding_balance' then tag_decimal_value end) as outstanding_balance
+                              from crmtest_ext.user_tag_storage where tag_id in ('outstanding_balance') group by user_id) a where outstanding_balance is not null;"
+      - cf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_storage where tag_id='cf_outstanding_balance' and tag_decimal_value is not null"
+      - cash_outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'cash_outstanding_balance' then tag_decimal_value end) as cash_outstanding_balance
+                                   from crmtest_ext.user_tag_storage where tag_id in ('cash_outstanding_balance') group by user_id) a where cash_outstanding_balance is not null;"
+      - online_cf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_storage where tag_id='online_cf_outstanding_balance' and tag_decimal_value is not null"
+      - mpf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_storage where tag_id='mpf_outstanding_balance' and tag_decimal_value is not null"
+      - last_disbursement_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_cash_loan' then tag_date_value end) as last_disbursement_date_of_cash_loan
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_cash_loan') group by user_id) a where last_disbursement_date_of_cash_loan is not null;"
+      - last_disbursement_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_offline_cf' then tag_date_value end) as last_disbursement_date_of_offline_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_offline_cf') group by user_id) a where last_disbursement_date_of_offline_cf is not null;"
+      - last_disbursement_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_online_cf' then tag_date_value end) as last_disbursement_date_of_online_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_online_cf') group by user_id) a where last_disbursement_date_of_online_cf is not null;"
+      - last_transaction_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_transaction_date_of_mpf' then tag_date_value end) as last_transaction_date_of_mpf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_transaction_date_of_mpf') group by user_id) a where last_transaction_date_of_mpf is not null;"
+      - cumulative_number_of_cash_loan_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_cash_loan_disbursement' then tag_str_value end) as cumulative_number_of_cash_loan_disbursement
+                                          from crmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_cash_loan_disbursement') group by user_id) a where cumulative_number_of_cash_loan_disbursement is not null;"
+      - cumulative_number_of_offline_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_offline_cf_disbursement' then tag_str_value end) as cumulative_number_of_offline_cf_disbursement
+                                          from crmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_offline_cf_disbursement') group by user_id) a where cumulative_number_of_offline_cf_disbursement is not null;"
+      - cumulative_number_of_online_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_online_cf_disbursement' then tag_str_value end) as cumulative_number_of_online_cf_disbursement
+                                          from crmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_online_cf_disbursement') group by user_id) a where cumulative_number_of_online_cf_disbursement is not null;"
+      - cumulative_number_of_mpf_transaction: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_mpf_transaction' then tag_str_value end) as cumulative_number_of_mpf_transaction
+                                          from crmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_mpf_transaction') group by user_id) a where cumulative_number_of_mpf_transaction is not null;"
+      - last_full_repayment_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_cash_loan' then tag_date_value end) as last_full_repayment_date_of_cash_loan
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_cash_loan') group by user_id) a where last_full_repayment_date_of_cash_loan is not null;"
+      - last_full_repayment_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_offline_cf' then tag_date_value end) as last_full_repayment_date_of_offline_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_offline_cf') group by user_id) a where last_full_repayment_date_of_offline_cf is not null;"
+      - last_full_repayment_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_online_cf' then tag_date_value end) as last_full_repayment_date_of_online_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_online_cf') group by user_id) a where last_full_repayment_date_of_online_cf is not null;"
+      - last_full_repayment_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_mpf' then tag_date_value end) as last_full_repayment_date_of_mpf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_mpf') group by user_id) a where last_full_repayment_date_of_mpf is not null;"
+      - latest_due_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_cash_loan' then tag_date_value end) as latest_due_date_of_cash_loan
+                                              from crmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_cash_loan') group by user_id) a where latest_due_date_of_cash_loan is not null;"
+      - latest_due_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_offline_cf' then tag_date_value end) as latest_due_date_of_offline_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_offline_cf') group by user_id) a where latest_due_date_of_offline_cf is not null;"
+      - latest_due_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_online_cf' then tag_date_value end) as latest_due_date_of_online_cf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_online_cf') group by user_id) a where latest_due_date_of_online_cf is not null;"
+      - latest_due_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_mpf' then tag_date_value end) as latest_due_date_of_mpf
+                                              from crmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_mpf') group by user_id) a where latest_due_date_of_mpf is not null;"
+      - date_of_first_mpf_offline_transaction: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_mpf_offline_transaction' then tag_date_value end) as date_of_first_mpf_offline_transaction from crmtest_ext.user_tag_storage where tag_id in ('date_of_first_mpf_offline_transaction') group by user_id) a where date_of_first_mpf_offline_transaction is not null;"
+      - date_of_first_mpf_online_transaction: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_mpf_online_transaction' then tag_date_value end) as date_of_first_mpf_online_transaction from crmtest_ext.user_tag_storage where tag_id in ('date_of_first_mpf_online_transaction') group by user_id) a where date_of_first_mpf_online_transaction is not null;"
+
+    JP:
+      - residentialcity: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='residentialcity' and tag_str_value is not null"
+      - monthly_income: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='monthly_income' and tag_decimal_value is  not null"
+      - device_of_first_apply: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='device_of_first_apply' and tag_str_value is not null"
+      - mpf_first_credit_apply_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='mpf_first_credit_apply_date' and tag_date_value is not null"
+      - mpf_first_credit_approval_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='mpf_first_credit_approval_date' and tag_date_value is not null"
+      - mpf_first_successful_transaction_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='mpf_first_successful_transaction_date' and tag_date_value is not null"
+      - number_of_logins_in_the_past_1_month: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_1_month' and tag_str_value is not null"
+      - number_of_logins_in_the_past_3_months: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_3_months' and tag_str_value is not null"
+      - number_of_logins_in_the_past_6_months: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_6_months' and tag_str_value is not null"
+      - last_app_opened_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='last_app_opened_date' and tag_date_value is not null"
+#      - last_login_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='last_login_date' and tag_date_value is not null"
+      - first_date_to_get_approved_of_credit_line: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='first_date_to_get_approved_of_credit_line' and tag_date_value is not null"
+      - latest_risk_score: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='latest_risk_score' and tag_decimal_value is  not null"
+#      - first_date_to_fill_in_bank_account: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='first_date_to_fill_in_bank_account' and tag_date_value is not null"
+#      - last_application_date_of_concurrent_loan: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='last_application_date_of_concurrent_loan' and tag_date_value is not null"
+      - isapplicant: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='isapplicant' and tag_str_value is not null"
+#      - loan_balance: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='loan_balance' and tag_decimal_value is not null"
+      - first_approved_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='first_approved_date' and tag_date_value is not null"
+      - second_approved_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='second_approved_date' and tag_date_value is not null"
+      - last_application_date: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='last_application_date' and tag_date_value is not null"
+      - outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'outstanding_balance' then tag_decimal_value end) as outstanding_balance
+                              from idcrmtest_ext.user_tag_storage where tag_id in ('outstanding_balance') group by user_id) a where outstanding_balance is not null;"
+      - cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='cf_outstanding_balance' and tag_decimal_value is not null"
+      - cash_outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'cash_outstanding_balance' then tag_decimal_value end) as cash_outstanding_balance
+                                   from idcrmtest_ext.user_tag_storage where tag_id in ('cash_outstanding_balance') group by user_id) a where cash_outstanding_balance is not null;"
+      - online_cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='online_cf_outstanding_balance' and tag_decimal_value is not null"
+      - mpf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_storage where tag_id='mpf_outstanding_balance' and tag_decimal_value is not null"
+      - last_disbursement_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_cash_loan' then tag_date_value end) as last_disbursement_date_of_cash_loan
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_cash_loan') group by user_id) a where last_disbursement_date_of_cash_loan is not null;"
+      - last_disbursement_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_offline_cf' then tag_date_value end) as last_disbursement_date_of_offline_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_offline_cf') group by user_id) a where last_disbursement_date_of_offline_cf is not null;"
+      - last_disbursement_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_online_cf' then tag_date_value end) as last_disbursement_date_of_online_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_online_cf') group by user_id) a where last_disbursement_date_of_online_cf is not null;"
+      - last_transaction_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_transaction_date_of_mpf' then tag_date_value end) as last_transaction_date_of_mpf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_transaction_date_of_mpf') group by user_id) a where last_transaction_date_of_mpf is not null;"
+      - cumulative_number_of_cash_loan_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_cash_loan_disbursement' then tag_str_value end) as cumulative_number_of_cash_loan_disbursement
+                                          from idcrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_cash_loan_disbursement') group by user_id) a where cumulative_number_of_cash_loan_disbursement is not null;"
+      - cumulative_number_of_offline_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_offline_cf_disbursement' then tag_str_value end) as cumulative_number_of_offline_cf_disbursement
+                                          from idcrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_offline_cf_disbursement') group by user_id) a where cumulative_number_of_offline_cf_disbursement is not null;"
+      - cumulative_number_of_online_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_online_cf_disbursement' then tag_str_value end) as cumulative_number_of_online_cf_disbursement
+                                          from idcrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_online_cf_disbursement') group by user_id) a where cumulative_number_of_online_cf_disbursement is not null;"
+      - cumulative_number_of_mpf_transaction: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_mpf_transaction' then tag_str_value end) as cumulative_number_of_mpf_transaction
+                                          from idcrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_mpf_transaction') group by user_id) a where cumulative_number_of_mpf_transaction is not null;"
+      - last_full_repayment_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_cash_loan' then tag_date_value end) as last_full_repayment_date_of_cash_loan
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_cash_loan') group by user_id) a where last_full_repayment_date_of_cash_loan is not null;"
+      - last_full_repayment_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_offline_cf' then tag_date_value end) as last_full_repayment_date_of_offline_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_offline_cf') group by user_id) a where last_full_repayment_date_of_offline_cf is not null;"
+      - last_full_repayment_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_online_cf' then tag_date_value end) as last_full_repayment_date_of_online_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_online_cf') group by user_id) a where last_full_repayment_date_of_online_cf is not null;"
+      - last_full_repayment_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_mpf' then tag_date_value end) as last_full_repayment_date_of_mpf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_mpf') group by user_id) a where last_full_repayment_date_of_mpf is not null;"
+      - latest_due_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_cash_loan' then tag_date_value end) as latest_due_date_of_cash_loan
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_cash_loan') group by user_id) a where latest_due_date_of_cash_loan is not null;"
+      - latest_due_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_offline_cf' then tag_date_value end) as latest_due_date_of_offline_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_offline_cf') group by user_id) a where latest_due_date_of_offline_cf is not null;"
+      - latest_due_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_online_cf' then tag_date_value end) as latest_due_date_of_online_cf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_online_cf') group by user_id) a where latest_due_date_of_online_cf is not null;"
+      - latest_due_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_mpf' then tag_date_value end) as latest_due_date_of_mpf
+                                              from idcrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_mpf') group by user_id) a where latest_due_date_of_mpf is not null;"
+      - date_of_first_mpf_offline_transaction: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_mpf_offline_transaction' then tag_date_value end) as date_of_first_mpf_offline_transaction from idcrmtest_ext.user_tag_storage where tag_id in ('date_of_first_mpf_offline_transaction') group by user_id) a where date_of_first_mpf_offline_transaction is not null;"
+      - date_of_first_mpf_online_transaction: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_mpf_online_transaction' then tag_date_value end) as date_of_first_mpf_online_transaction from idcrmtest_ext.user_tag_storage where tag_id in ('date_of_first_mpf_online_transaction') group by user_id) a where date_of_first_mpf_online_transaction is not null;"
+      - last_applied_product_type: "select count(1) from (select user_id,max(case when tag_id = 'last_applied_product_type' then tag_str_value end) as last_applied_product_type from idcrmtest_ext.user_tag_storage where tag_id='last_applied_product_type' group by user_id) a where last_applied_product_type is not null;"
+
+    CN:
+      - entrydate: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='entrydate' and tag_date_value is not null"
+      - monthly_income: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='monthly_income' and tag_decimal_value is  not null"
+      - complete_profile_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='complete_profile_date' and tag_date_value is  not null"
+      - birthday: "select count(1) from (select user_id, max(case when tag_id='birthday' then tag_date_value end) as birthday from vncrmtest_ext.user_tag_storage where tag_id='birthday' group by user_id) a  where birthday is not null;"
+      - install_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='install_date' and tag_date_value is  not null"
+      - first_date_to_fill_in_bank_account: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_date_to_fill_in_bank_account' and tag_date_value is not null"
+      - first_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_loan_submitted_date' and tag_date_value is not null"
+#      - loan_balance: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='loan_balance' and tag_decimal_value is not null"
+      - last_application_date: "select count(1) from (select user_id, max(case when tag_id='last_application_date' then tag_date_value end) as last_application_date from vncrmtest_ext.user_tag_storage where tag_id='last_application_date' group by user_id) a  where last_application_date is not null;"
+      - residential_province: "select count(1) from (select user_id, max(case when tag_id='residentialprovince' then tag_str_value end) as residentialprovince from vncrmtest_ext.user_tag_storage where tag_id='residentialprovince' group by user_id) a  where residentialprovince is not null;"
+      - permanent_province: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='permanentprovince' and tag_str_value is not null"
+      - work_province: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='workprovince' and tag_str_value is not null"
+      - gender: "select count(1) from (select user_id, max(case when tag_id='gender' then tag_str_value end) as gender from vncrmtest_ext.user_tag_storage where tag_id='gender' group by user_id) a  where gender is not null;"
+      - maritalstatus: "select count(1) from (select user_id, max(case when tag_id='maritalstatus' then tag_str_value end) as maritalstatus from vncrmtest_ext.user_tag_storage where tag_id='maritalstatus' group by user_id) a  where maritalstatus is not null;"
+      - education: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='education' and tag_str_value is not null"
+      - occupation: "select count(1) from (select user_id, max(case when tag_id='occupation' then tag_str_value end) as occupation from vncrmtest_ext.user_tag_storage where tag_id='occupation' group by user_id) a  where occupation is not null;"
+      - property: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='property' and tag_str_value is not null"
+      - start_filling_profile_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='start_filling_profile_date' and tag_date_value is not null"
+      - first_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_loan_funded_date' and tag_date_value is not null"
+      - first_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_loan_repaid_date' and tag_date_value is not null"
+      - second_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='second_loan_submitted_date' and tag_date_value is not null"
+      - second_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='second_loan_funded_date' and tag_date_value is not null"
+      - second_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='second_loan_repaid_date' and tag_date_value is not null"
+      - isapplicant: "select count(1) from (select user_id, max(case when tag_id='isapplicant' then tag_str_value end) as isapplicant from vncrmtest_ext.user_tag_storage where tag_id='isapplicant' group by user_id) a  where isapplicant is not null;"
+      - last_application_status: "select count(1) from (select user_id, max(case when tag_id='last_application_status' then tag_str_value end) as last_application_status from vncrmtest_ext.user_tag_storage where tag_id='last_application_status' group by user_id) a  where last_application_status is not null;"
+      - channel_name: "select count(1) from (select user_id, max(case when tag_id='channel_name' then tag_str_value end) as channel_name from vncrmtest_ext.user_tag_storage where tag_id='channel_name' group by user_id) a  where channel_name is not null;"
+      - channel_category: "select count(1) from (select user_id, max(case when tag_id='channel_category' then tag_str_value end) as channel_category from vncrmtest_ext.user_tag_storage where tag_id='channel_category' group by user_id) a  where channel_category is not null;"
+      - first_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_approved_loantype' and tag_str_value is not null"
+      - second_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='second_approved_loantype' and tag_str_value is not null"
+      - has_made_referral: "select count(1) from (select user_id, max(case when tag_id='has_made_referral' then tag_str_value end) as has_made_referral from vncrmtest_ext.user_tag_storage where tag_id='has_made_referral' group by user_id) a  where has_made_referral is not null;"
+      - first_application_loantype: "select count(1) from (select user_id, max(case when tag_id='first_application_loantype' then tag_str_value end) as first_application_loantype from vncrmtest_ext.user_tag_storage where tag_id='first_application_loantype' group by user_id) a  where first_application_loantype is not null;"
+      - first_approved_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='first_approved_date' and tag_date_value is not null"
+      - second_approved_date: "select count(*) from vncrmtest_ext.user_tag_storage where tag_id='second_approved_date' and tag_date_value is not null"
+      - device_of_first_apply: "select count(1) from (select user_id, max(case when tag_id='device_of_first_apply' then tag_str_value end) as device_of_first_apply from vncrmtest_ext.user_tag_storage where tag_id='device_of_first_apply' group by user_id) a  where device_of_first_apply is not null;"
+      - NumberOfLoginInPast1Month: "select count(1) from (select user_id, max(case when tag_id='number_of_logins_in_the_past_1_month' then tag_str_value end) as number_of_logins_in_the_past_1_month from vncrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_1_month' group by user_id) a  where number_of_logins_in_the_past_1_month is not null;"
+      - NumberOfLoginInPast3Month: "select count(1) from (select user_id, max(case when tag_id='number_of_logins_in_the_past_3_months' then tag_str_value end) as number_of_logins_in_the_past_3_months from vncrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_3_months' group by user_id) a  where number_of_logins_in_the_past_3_months is not null;"
+      - NumberOfLoginInPast6Month: "select count(1) from (select user_id, max(case when tag_id='number_of_logins_in_the_past_6_months' then tag_str_value end) as number_of_logins_in_the_past_6_months from vncrmtest_ext.user_tag_storage where tag_id='number_of_logins_in_the_past_6_months' group by user_id) a  where number_of_logins_in_the_past_6_months is not null;"
+      - last_app_opened_date: "select count(1) from (select user_id, max(case when tag_id='last_app_opened_date' then tag_date_value end) as last_app_opened_date from vncrmtest_ext.user_tag_storage where tag_id='last_app_opened_date' group by user_id) a  where last_app_opened_date is not null;"
+      - last_login_date: "select count(1) from (select user_id, max(case when tag_id='last_login_date' then tag_date_value end) as last_login_date from vncrmtest_ext.user_tag_storage where tag_id='last_login_date' group by user_id) a  where last_login_date is not null;"
+      - last_application_date: "select count(1) from (select user_id, max(case when tag_id='last_application_date' then tag_date_value end) as last_application_date from vncrmtest_ext.user_tag_storage where tag_id='last_application_date' group by user_id) a  where last_application_date is not null;"
+      - registration_date: "select count(1) from (select user_id, max(case when tag_id='registration_date' then tag_date_value end) as registration_date from vncrmtest_ext.user_tag_storage where tag_id='registration_date' group by user_id) a  where registration_date is not null;"
+      - last_applied_product_type: "select count(1) from (select user_id, max(case when tag_id='last_applied_product_type' then tag_str_value end) as last_applied_product_type from vncrmtest_ext.user_tag_storage where tag_id='last_applied_product_type' group by user_id) a  where last_applied_product_type is not null;"
+      - first_date_to_referral: "select count(1) from (select user_id,max(case when tag_id = 'first_date_to_referral' then tag_date_value end) as first_date_to_referral
+                                from vncrmtest_ext.user_tag_storage where tag_id in ('first_date_to_referral') group by user_id) a where first_date_to_referral is not null;"
+      - cumulative_number_of_referrals: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_referrals' then tag_str_value end) as cumulative_number_of_referrals
+                                        from vncrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_referrals') group by user_id) a where cumulative_number_of_referrals is not null;"
+      - date_of_first_cash_loan_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'date_of_first_cash_loan_disbursement' then tag_date_value end) as date_of_first_cash_loan_disbursement
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('date_of_first_cash_loan_disbursement') group by user_id) a where date_of_first_cash_loan_disbursement is not null;"
+      - outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'outstanding_balance' then tag_decimal_value end) as outstanding_balance
+                              from vncrmtest_ext.user_tag_storage where tag_id in ('outstanding_balance') group by user_id) a where outstanding_balance is not null;"
+#      - cf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_storage where tag_id='cf_outstanding_balance' and tag_decimal_value is not null"
+      - cash_outstanding_balance: "select count(1) from (select user_id,max(case when tag_id = 'cash_outstanding_balance' then tag_decimal_value end) as cash_outstanding_balance
+                                  from vncrmtest_ext.user_tag_storage where tag_id in ('cash_outstanding_balance') group by user_id) a where cash_outstanding_balance is not null;"
+#      - online_cf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_storage where tag_id='online_cf_outstanding_balance' and tag_decimal_value is not null"
+#      - mpf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_storage where tag_id='mpf_outstanding_balance' and tag_decimal_value is not null"
+      - residentialcity: "select count(1) from (select user_id, max(case when tag_id='residentialcity' then tag_str_value end) as residentialcity from vncrmtest_ext.user_tag_storage where tag_id='residentialcity' group by user_id) a  where residentialcity is not null;"
+      - last_disbursement_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_cash_loan' then tag_date_value end) as last_disbursement_date_of_cash_loan
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_cash_loan') group by user_id) a where last_disbursement_date_of_cash_loan is not null;"
+      - last_disbursement_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_offline_cf' then tag_date_value end) as last_disbursement_date_of_offline_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_offline_cf') group by user_id) a where last_disbursement_date_of_offline_cf is not null;"
+      - last_disbursement_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_disbursement_date_of_online_cf' then tag_date_value end) as last_disbursement_date_of_online_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_disbursement_date_of_online_cf') group by user_id) a where last_disbursement_date_of_online_cf is not null;"
+      - last_transaction_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_transaction_date_of_mpf' then tag_date_value end) as last_transaction_date_of_mpf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_transaction_date_of_mpf') group by user_id) a where last_transaction_date_of_mpf is not null;"
+      - cumulative_number_of_cash_loan_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_cash_loan_disbursement' then tag_str_value end) as cumulative_number_of_cash_loan_disbursement
+                                          from vncrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_cash_loan_disbursement') group by user_id) a where cumulative_number_of_cash_loan_disbursement is not null;"
+      - cumulative_number_of_offline_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_offline_cf_disbursement' then tag_str_value end) as cumulative_number_of_offline_cf_disbursement
+                                          from vncrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_offline_cf_disbursement') group by user_id) a where cumulative_number_of_offline_cf_disbursement is not null;"
+      - cumulative_number_of_online_cf_disbursement: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_online_cf_disbursement' then tag_str_value end) as cumulative_number_of_online_cf_disbursement
+                                          from vncrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_online_cf_disbursement') group by user_id) a where cumulative_number_of_online_cf_disbursement is not null;"
+      - cumulative_number_of_mpf_transaction: "select count(1) from (select user_id,max(case when tag_id = 'cumulative_number_of_mpf_transaction' then tag_str_value end) as cumulative_number_of_mpf_transaction
+                                          from vncrmtest_ext.user_tag_storage where tag_id in ('cumulative_number_of_mpf_transaction') group by user_id) a where cumulative_number_of_mpf_transaction is not null;"
+      - last_full_repayment_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_cash_loan' then tag_date_value end) as last_full_repayment_date_of_cash_loan
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_cash_loan') group by user_id) a where last_full_repayment_date_of_cash_loan is not null;"
+      - last_full_repayment_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_offline_cf' then tag_date_value end) as last_full_repayment_date_of_offline_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_offline_cf') group by user_id) a where last_full_repayment_date_of_offline_cf is not null;"
+      - last_full_repayment_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_online_cf' then tag_date_value end) as last_full_repayment_date_of_online_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_online_cf') group by user_id) a where last_full_repayment_date_of_online_cf is not null;"
+      - last_full_repayment_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'last_full_repayment_date_of_mpf' then tag_date_value end) as last_full_repayment_date_of_mpf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('last_full_repayment_date_of_mpf') group by user_id) a where last_full_repayment_date_of_mpf is not null;"
+      - latest_due_date_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_cash_loan' then tag_date_value end) as latest_due_date_of_cash_loan
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_cash_loan') group by user_id) a where latest_due_date_of_cash_loan is not null;"
+      - latest_due_date_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_offline_cf' then tag_date_value end) as latest_due_date_of_offline_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_offline_cf') group by user_id) a where latest_due_date_of_offline_cf is not null;"
+      - latest_due_date_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_online_cf' then tag_date_value end) as latest_due_date_of_online_cf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_online_cf') group by user_id) a where latest_due_date_of_online_cf is not null;"
+      - latest_due_date_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'latest_due_date_of_mpf' then tag_date_value end) as latest_due_date_of_mpf
+                                              from vncrmtest_ext.user_tag_storage where tag_id in ('latest_due_date_of_mpf') group by user_id) a where latest_due_date_of_mpf is not null;"
+  Wide:
+    US:
+      - location: "select count(1) from crmtest_ext.user_tag_wide where location is not null"
+      - gender: "select count(1) from crmtest_ext.user_tag_wide where gender is not null"
+      - last_applied_product_type: 'select count(1) from crmtest_ext.user_tag_wide where last_applied_product_type is not null'
+      - first_date_to_referral: 'select count(1) from crmtest_ext.user_tag_wide where first_date_to_referral is not null'
+      - cumulative_number_of_referrals: 'select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_referrals is not null'
+      - date_of_first_offline_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_offline_cf_disbursement is not null'
+      - date_of_first_cash_loan_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is not null'
+      - date_of_first_online_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_online_cf_disbursement is not null'
+      - outstanding_balance: 'select count(1) from crmtest_ext.user_tag_wide where outstanding_balance is not null'
+      - cf_outstanding_balance: 'select count(1) from crmtest_ext.user_tag_wide where cf_outstanding_balance is not null'
+      - cash_outstanding_balance: 'select count(1) from crmtest_ext.user_tag_wide where cash_outstanding_balance is not null'
+      - online_cf_outstanding_balance: 'select count(1) from crmtest_ext.user_tag_wide where online_cf_outstanding_balance is not null'
+      - mpf_outstanding_balance: 'select count(1) from crmtest_ext.user_tag_wide where mpf_outstanding_balance is not null'
+      - last_disbursement_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+      - last_disbursement_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+      - last_disbursement_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+      - last_transaction_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+      - cumulative_number_of_cash_loan_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is not null;'
+      - cumulative_number_of_offline_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is not null;'
+      - cumulative_number_of_online_cf_disbursement: 'select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is not null;'
+      - cumulative_number_of_mpf_transaction: 'select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is not null;'
+      - last_full_repayment_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+      - last_full_repayment_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+      - last_full_repayment_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+      - last_full_repayment_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+      - latest_due_date_of_cash_loan: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+      - latest_due_date_of_offline_cf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+      - latest_due_date_of_online_cf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+      - latest_due_date_of_mpf: 'select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+      - date_of_first_mpf_offline_transaction: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is not null;'
+      - date_of_first_mpf_online_transaction: 'select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is not null;'
+
+    JP:
+      - residentialcity: "select count(1) from idcrmtest_ext.user_tag_wide where residentialcity is not null"
+      - monthly_income: "select count(1) from idcrmtest_ext.user_tag_wide where monthly_income is not null"
+      - device_of_first_apply: "select count(1) from idcrmtest_ext.user_tag_wide where device_of_first_apply is not null"
+      - mpf_first_credit_apply_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_apply_date is not null"
+      - mpf_first_credit_approval_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_approval_date is not null"
+      - mpf_first_successful_transaction_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_successful_transaction_date is not null"
+      - number_of_logins_in_the_past_1_month: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month is not null"
+      - number_of_logins_in_the_past_3_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months is not null"
+      - number_of_logins_in_the_past_6_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months is not null"
+      - last_app_opened_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_app_opened_date is not null"
+#      - last_login_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_login_date is not null"
+      - first_date_to_get_approved_of_credit_line: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_get_approved_of_credit_line is not null"
+      - latest_risk_score: "select count(1) from idcrmtest_ext.user_tag_wide where latest_risk_score is not null"
+#      - first_date_to_fill_in_bank_account: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is not null"
+#      - last_application_date_of_concurrent_loan: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date_of_concurrent_loan is not null"
+      - isapplicant: "select count(1) from idcrmtest_ext.user_tag_wide where isapplicant is not null"
+#      - loan_balance: "select count(1) from idcrmtest_ext.user_tag_wide where loan_balance is not null"
+      - first_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where first_approved_date is not null"
+      - second_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where second_approved_date is not null"
+      - last_application_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date is not null"
+      - outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where outstanding_balance is not null"
+      - cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where cf_outstanding_balance is not null"
+      - cash_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where cash_outstanding_balance is not null"
+      - online_cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where online_cf_outstanding_balance is not null"
+      - mpf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_outstanding_balance is not null"
+      - last_disbursement_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+      - last_disbursement_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+      - last_disbursement_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+      - last_transaction_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+      - cumulative_number_of_cash_loan_disbursement: 'select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is not null;'
+      - cumulative_number_of_offline_cf_disbursement: 'select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is not null;'
+      - cumulative_number_of_online_cf_disbursement: 'select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is not null;'
+      - cumulative_number_of_mpf_transaction: 'select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is not null;'
+      - last_full_repayment_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+      - last_full_repayment_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+      - last_full_repayment_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+      - last_full_repayment_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+      - latest_due_date_of_cash_loan: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+      - latest_due_date_of_offline_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+      - latest_due_date_of_online_cf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+      - latest_due_date_of_mpf: 'select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+      - date_of_first_mpf_offline_transaction: 'select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is not null;'
+      - date_of_first_mpf_online_transaction: 'select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is not null;'
+      - last_applied_product_type: 'select count(1) from idcrmtest_ext.user_tag_wide where last_applied_product_type is not null'
+
+    CN:
+      - entrydate: "select count(*) from vncrmtest_ext.user_tag_wide where entrydate is not null"
+      - monthly_income: "select count(*) from vncrmtest_ext.user_tag_wide where monthly_income is not null"
+      - complete_profile_date: "select count(*) from vncrmtest_ext.user_tag_wide where complete_profile_date is not null"
+      - birthday: "select count(*) from vncrmtest_ext.user_tag_wide where birthday  is not null"
+      - install_date: "select count(*) from vncrmtest_ext.user_tag_wide where install_date  is not null"
+      - first_date_to_fill_in_bank_account: "select count(*) from vncrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is not null"
+      - first_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_submitted_date is not null"
+#      - loan_balance: "select count(*) from vncrmtest_ext.user_tag_wide where loan_balance is not null"
+      - last_application_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_date  is not null"
+      - residential_province: "select count(*) from vncrmtest_ext.user_tag_wide where residentialprovince is not null"
+      - permanent_province: "select count(*) from vncrmtest_ext.user_tag_wide where permanentprovince is not null"
+      - work_province: "select count(*) from vncrmtest_ext.user_tag_wide where workprovince is not null"
+      - gender: "select count(*) from vncrmtest_ext.user_tag_wide where gender is not null"
+      - maritalstatus: "select count(*) from vncrmtest_ext.user_tag_wide where maritalstatus is not null"
+      - education: "select count(*) from vncrmtest_ext.user_tag_wide where education is not null"
+      - occupation: "select count(*) from vncrmtest_ext.user_tag_wide where occupation is not null"
+      - property: "select count(*) from vncrmtest_ext.user_tag_wide where property is not null"
+      - start_filling_profile_date: "select count(*) from vncrmtest_ext.user_tag_wide where start_filling_profile_date is not null"
+      - first_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_funded_date is not null"
+      - first_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_repaid_date is not null"
+      - second_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_submitted_date is not null"
+      - second_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_funded_date is not null"
+      - second_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_repaid_date is not null"
+      - isapplicant: "select count(*) from vncrmtest_ext.user_tag_wide where isapplicant is not null"
+      - last_application_status: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_status is not null"
+      - channel_name: "select count(*) from vncrmtest_ext.user_tag_wide where channel_name is not null"
+      - channel_category: "select count(*) from vncrmtest_ext.user_tag_wide where channel_category is not null"
+      - first_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where first_approved_loantype is not null"
+      - second_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where second_approved_loantype is not null"
+      - has_made_referral: "select count(*) from vncrmtest_ext.user_tag_wide where has_made_referral is not null"
+      - first_application_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where first_application_loantype is not null"
+      - first_approved_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_approved_date is not null"
+      - second_approved_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_approved_date is not null"
+      - device_of_first_apply: "select count(*) from vncrmtest_ext.user_tag_wide where device_of_first_apply is not null"
+      - NumberOfLoginInPast1Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month is not null"
+      - NumberOfLoginInPast3Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months is not null"
+      - NumberOfLoginInPast6Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months is not null"
+      - last_app_opened_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_app_opened_date is not null"
+      - last_login_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_login_date is not null"
+      - last_application_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_date is not null"
+      - registration_date: "select count(*) from vncrmtest_ext.user_tag_wide where registration_date is not null"
+      - last_applied_product_type: 'select count(1) from vncrmtest_ext.user_tag_wide where last_applied_product_type is not null'
+      - first_date_to_referral: 'select count(1) from vncrmtest_ext.user_tag_wide where first_date_to_referral is not null'
+      - cumulative_number_of_referrals: 'select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_referrals is not null'
+      - date_of_first_cash_loan_disbursement: 'select count(1) from vncrmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is not null'
+      - outstanding_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where outstanding_balance is not null'
+#      - cf_outstanding_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where cf_outstanding_balance is not null'
+      - cash_outstanding_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where cash_outstanding_balance is not null'
+#      - online_cf_outstanding_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where online_cf_outstanding_balance is not null'
+#      - mpf_outstanding_balance: 'select count(1) from vncrmtest_ext.user_tag_wide where mpf_outstanding_balance is not null'
+      - residentialcity: "select count(1) from vncrmtest_ext.user_tag_wide where residentialcity is not null"
+      - last_disbursement_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is not null;'
+      - last_disbursement_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is not null;'
+      - last_disbursement_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is not null;'
+      - last_transaction_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is not null;'
+      - cumulative_number_of_cash_loan_disbursement: 'select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is not null;'
+      - cumulative_number_of_offline_cf_disbursement: 'select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is not null;'
+      - cumulative_number_of_online_cf_disbursement: 'select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is not null;'
+      - cumulative_number_of_mpf_transaction: 'select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is not null;'
+      - last_full_repayment_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is not null;'
+      - last_full_repayment_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is not null;'
+      - last_full_repayment_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is not null;'
+      - last_full_repayment_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is not null;'
+      - latest_due_date_of_cash_loan: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is not null;'
+      - latest_due_date_of_offline_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is not null;'
+      - latest_due_date_of_online_cf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is not null;'
+      - latest_due_date_of_mpf: 'select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_mpf is not null;'
+
+ESSrcDetail:
+  ES:
+    US:
+      query: '{"query": {"bool": {"must": [{"match": {"gender": "Male"}},{"range": {"monthly_income": {"gt": "100"}}}]}},"from": 0,"size": 5}'
+    JP:
+      query: '{"query": {"bool": {"must": [{"match": {"gender": "Laki-laki"}},{"range": {"monthly_income": {"gt": "2990000"}}}]}},"from": 0,"size": 5}'
+    CN:
+      query: '{"size":3,"query":{"bool":{"must":[{"terms":{"gender":["Nam"],"boost":1.0}}],"adjust_pure_negative":true,"boost":1.0}}}'
+      workQuery: '{"query": {"bool": {"must": [{"match": {"gender": "Nam"}},{"range": {"monthly_income": {"gt": "100"}}}]}},"from": 0,"size": 5}'
+  Src:
+    US:
+      gps: 'select * from crm_ext.user_addr_gps where accountid={} and partition_0={}'
+    JP:
+      account_credits: 'select * from idcrm_ext.account_credits where account_id={} and partition_0={}'
+      work: 'select * from idods.works where accountid={}'
+    CN:
+      account: 'select * from etl_utils.v_accounts_vn where id={}'
+      person: 'select * from vnods.persons where accountid={}'
+      work: 'select * from vnods.works where accountid={}'
+  Check:
+    US:
+      geo: ['residential_latitude', 'residential_longitude']
+    JP:
+      es_latest_risk_score: ['latest_risk_score']
+      score: ['score']
+      es_work: ['monthly_income']
+      work: ['salary']
+    CN:
+      es_account: ['accountname']
+      account: ['accountname']
+      person: ['nationality', 'gender', 'maritalstatus', 'mobile', 'email', 'occupation', 'property', 'yearlyfamilyincome']
+      es_work: ['company', 'workemail', 'workphone', 'monthly_income']
+      work: ['company', 'email', 'phone', 'salary']
+
+
+IncrementalUpdate:
+  originTb:
+    US:
+      - users: 'select * from phrpt.users order by accountid limit 15'
+      - first_loan: 'select * from phrpt.first_loan order by first_loanorderno desc limit 15'
+    JP:
+    CN:
+
+  newTb:
+    US:
+      - users_new: 'select * from phrpt.users_new order by accountid limit 15'
+      - first_loan_new: 'select * from phrpt.first_loan_new order by first_loanorderno desc limit 15'
+    JP:
+    CN:
+
+  ignoreItems:
+    - ['createdat', 'dw_created_at']
+
+WideTotalQuery:
+  US:
+    query: "select count(1) from crmtest_ext.user_tag_wide"
+  JP:
+    query: "select count(1) from idcrmtest_ext.user_tag_wide"
+  CN:
+    query: "select count(1) from vncrmtest_ext.user_tag_wide"
+
+
+#  Note: tag sequence should same with above StorageWideQuery
+WideNullEmpty:
+  US:
+    - location: "select count(1) from crmtest_ext.user_tag_wide where location is null or location=''"
+    - gender: "select count(1) from crmtest_ext.user_tag_wide where gender is null"
+    - last_applied_product_type: "select count(1) from crmtest_ext.user_tag_wide where last_applied_product_type is null or last_applied_product_type=''"
+    - first_date_to_referral: "select count(1) from crmtest_ext.user_tag_wide where first_date_to_referral is null"
+    - cumulative_number_of_referrals: "select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_referrals is null"
+    - date_of_first_offline_cf_disbursement: "select count(1) from crmtest_ext.user_tag_wide where date_of_first_offline_cf_disbursement is null"
+    - date_of_first_cash_loan_disbursement: "select count(1) from crmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is null"
+    - date_of_first_online_cf_disbursement: "select count(1) from crmtest_ext.user_tag_wide where date_of_first_online_cf_disbursement is null"
+    - outstanding_balance: "select count(1) from crmtest_ext.user_tag_wide where outstanding_balance is null"
+    - cf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_wide where cf_outstanding_balance is null"
+    - cash_outstanding_balance: "select count(1) from crmtest_ext.user_tag_wide where cash_outstanding_balance is null"
+    - online_cf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_wide where online_cf_outstanding_balance is null"
+    - mpf_outstanding_balance: "select count(1) from crmtest_ext.user_tag_wide where mpf_outstanding_balance is null"
+    - last_disbursement_date_of_cash_loan: "select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is null;"
+    - last_disbursement_date_of_offline_cf: "select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is null;"
+    - last_disbursement_date_of_online_cf: "select count(1) from crmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is null;"
+    - last_transaction_date_of_mpf: "select count(1) from crmtest_ext.user_tag_wide where last_transaction_date_of_mpf is null;"
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is null;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is null;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is null;"
+    - cumulative_number_of_mpf_transaction: "select count(1) from crmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is null;"
+    - last_full_repayment_date_of_cash_loan: "select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is null;"
+    - last_full_repayment_date_of_offline_cf: "select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is null;"
+    - last_full_repayment_date_of_online_cf: "select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is null;"
+    - last_full_repayment_date_of_mpf: "select count(1) from crmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is null;"
+    - latest_due_date_of_cash_loan: "select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is null;"
+    - latest_due_date_of_offline_cf: "select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is null;"
+    - latest_due_date_of_online_cf: "select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_online_cf is null;"
+    - latest_due_date_of_mpf: "select count(1) from crmtest_ext.user_tag_wide where latest_due_date_of_mpf is null;"
+    - date_of_first_mpf_offline_transaction: "select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is null;"
+    - date_of_first_mpf_online_transaction: "select count(1) from crmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is null;"
+
+  JP:
+    - residentialcity: "select count(1) from idcrmtest_ext.user_tag_wide where residentialcity is null or residentialcity=''"
+    - monthly_income: "select count(1) from idcrmtest_ext.user_tag_wide where monthly_income is null"
+    - device_of_first_apply: "select count(1) from idcrmtest_ext.user_tag_wide where device_of_first_apply is null"
+    - mpf_first_credit_apply_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_apply_date is null"
+    - mpf_first_credit_approval_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_credit_approval_date is null"
+    - mpf_first_successful_transaction_date: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_first_successful_transaction_date is null"
+    - number_of_logins_in_the_past_1_month: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month is null"
+    - number_of_logins_in_the_past_3_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months is null"
+    - number_of_logins_in_the_past_6_months: "select count(1) from idcrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months is null"
+    - last_app_opened_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_app_opened_date is null"
+#    - last_login_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_login_date is null"
+    - first_date_to_get_approved_of_credit_line: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_get_approved_of_credit_line is null "
+    - latest_risk_score: "select count(1) from idcrmtest_ext.user_tag_wide where latest_risk_score is null"
+#    - first_date_to_fill_in_bank_account: "select count(1) from idcrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is null "
+#    - last_application_date_of_concurrent_loan: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date_of_concurrent_loan is null"
+    - isapplicant: "select count(1) from idcrmtest_ext.user_tag_wide where isapplicant is null or isapplicant=''"
+#    - loan_balance: "select count(1) from idcrmtest_ext.user_tag_wide where loan_balance is null"
+    - first_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where first_approved_date is null"
+    - second_approved_date: "select count(1) from idcrmtest_ext.user_tag_wide where second_approved_date is null"
+    - last_application_date: "select count(1) from idcrmtest_ext.user_tag_wide where last_application_date is null"
+    - outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where outstanding_balance is null"
+    - cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where cf_outstanding_balance is null"
+    - cash_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where cash_outstanding_balance is null"
+    - online_cf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where online_cf_outstanding_balance is null"
+    - mpf_outstanding_balance: "select count(1) from idcrmtest_ext.user_tag_wide where mpf_outstanding_balance is null"
+    - last_disbursement_date_of_cash_loan: "select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is null;"
+    - last_disbursement_date_of_offline_cf: "select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is null;"
+    - last_disbursement_date_of_online_cf: "select count(1) from idcrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is null;"
+    - last_transaction_date_of_mpf: "select count(1) from idcrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is null;"
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is null;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is null;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is null;"
+    - cumulative_number_of_mpf_transaction: "select count(1) from idcrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is null;"
+    - last_full_repayment_date_of_cash_loan: "select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is null;"
+    - last_full_repayment_date_of_offline_cf: "select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is null;"
+    - last_full_repayment_date_of_online_cf: "select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is null;"
+    - last_full_repayment_date_of_mpf: "select count(1) from idcrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is null;"
+    - latest_due_date_of_cash_loan: "select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is null;"
+    - latest_due_date_of_offline_cf: "select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is null;"
+    - latest_due_date_of_online_cf: "select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is null;"
+    - latest_due_date_of_mpf: "select count(1) from idcrmtest_ext.user_tag_wide where latest_due_date_of_mpf is null;"
+    - date_of_first_mpf_offline_transaction: "select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_offline_transaction is null;"
+    - date_of_first_mpf_online_transaction: "select count(1) from idcrmtest_ext.user_tag_wide where date_of_first_mpf_online_transaction is null;"
+    - last_applied_product_type: "select count(1) from idcrmtest_ext.user_tag_wide where last_applied_product_type is null or last_applied_product_type=''"
+
+  CN:
+    - entrydate: "select count(*) from vncrmtest_ext.user_tag_wide where entrydate is null"
+    - monthly_income: "select count(*) from vncrmtest_ext.user_tag_wide where monthly_income is null"
+    - complete_profile_date: "select count(*) from vncrmtest_ext.user_tag_wide where complete_profile_date is null"
+    - birthday: "select count(*) from vncrmtest_ext.user_tag_wide where birthday  is null"
+    - install_date: "select count(*) from vncrmtest_ext.user_tag_wide where install_date  is null"
+    - first_date_to_fill_in_bank_account: "select count(*) from vncrmtest_ext.user_tag_wide where first_date_to_fill_in_bank_account is null"
+    - first_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_submitted_date is null"
+    # - loan_balance: "select count(*) from vncrmtest_ext.user_tag_wide where loan_balance is null"
+    - last_application_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_date  is null"
+    - residential_province: "select count(*) from vncrmtest_ext.user_tag_wide where residentialprovince is null or residentialprovince=''"
+    - permanent_province: "select count(*) from vncrmtest_ext.user_tag_wide where permanentprovince is null or permanentprovince=''"
+    - work_province: "select count(*) from vncrmtest_ext.user_tag_wide where workprovince is null or workprovince=''"
+    - gender: "select count(*) from vncrmtest_ext.user_tag_wide where gender is null"
+    - maritalstatus: "select count(*) from vncrmtest_ext.user_tag_wide where maritalstatus is null"
+    - education: "select count(*) from vncrmtest_ext.user_tag_wide where education is null"
+    - occupation: "select count(*) from vncrmtest_ext.user_tag_wide where occupation is null"
+    - property: "select count(*) from vncrmtest_ext.user_tag_wide where property is null"
+    - start_filling_profile_date: "select count(*) from vncrmtest_ext.user_tag_wide where start_filling_profile_date is null"
+    - first_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_funded_date is null"
+    - first_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_loan_repaid_date is null"
+    - second_loan_submitted_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_submitted_date is null"
+    - second_loan_funded_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_funded_date is null"
+    - second_loan_repaid_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_loan_repaid_date is null"
+    - isapplicant: "select count(*) from vncrmtest_ext.user_tag_wide where isapplicant is null or isapplicant=''"
+    - last_application_status: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_status is null or last_application_status=''"
+    - channel_name: "select count(*) from vncrmtest_ext.user_tag_wide where channel_name is null or channel_name=''"
+    - channel_category: "select count(*) from vncrmtest_ext.user_tag_wide where channel_category is null or channel_category=''"
+    - first_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where first_approved_loantype is null or first_approved_loantype=''"
+    - second_approved_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where second_approved_loantype is null or second_approved_loantype=''"
+    - has_made_referral: "select count(*) from vncrmtest_ext.user_tag_wide where has_made_referral is null or has_made_referral=''"
+    - first_application_loantype: "select count(*) from vncrmtest_ext.user_tag_wide where first_application_loantype is null or first_application_loantype=''"
+    - first_approved_date: "select count(*) from vncrmtest_ext.user_tag_wide where first_approved_date is null"
+    - second_approved_date: "select count(*) from vncrmtest_ext.user_tag_wide where second_approved_date is null"
+    - device_of_first_apply: "select count(*) from vncrmtest_ext.user_tag_wide where device_of_first_apply is null or device_of_first_apply=''"
+    - NumberOfLoginInPast1Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_1_month is null"
+    - NumberOfLoginInPast3Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_3_months is null"
+    - NumberOfLoginInPast6Month: "select count(*) from vncrmtest_ext.user_tag_wide where number_of_logins_in_the_past_6_months is null"
+    - last_app_opened_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_app_opened_date is null"
+    - last_login_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_login_date is null"
+    - last_application_date: "select count(*) from vncrmtest_ext.user_tag_wide where last_application_date is null"
+    - registration_date: "select count(*) from vncrmtest_ext.user_tag_wide where registration_date is null"
+    - last_applied_product_type: "select count(1) from vncrmtest_ext.user_tag_wide where last_applied_product_type is null or last_applied_product_type=''"
+    - first_date_to_referral: "select count(1) from vncrmtest_ext.user_tag_wide where first_date_to_referral is null"
+    - cumulative_number_of_referrals: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_referrals is null"
+    - date_of_first_cash_loan_disbursement: "select count(1) from vncrmtest_ext.user_tag_wide where date_of_first_cash_loan_disbursement is null"
+    - outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_wide where outstanding_balance is null"
+#    - cf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_wide where cf_outstanding_balance is null"
+    - cash_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_wide where cash_outstanding_balance is null"
+#    - online_cf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_wide where online_cf_outstanding_balance is null"
+#    - mpf_outstanding_balance: "select count(1) from vncrmtest_ext.user_tag_wide where mpf_outstanding_balance is null"
+    - residentialcity: "select count(1) from vncrmtest_ext.user_tag_wide where residentialcity is null or residentialcity=''"
+    - last_disbursement_date_of_cash_loan: "select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_cash_loan is null;"
+    - last_disbursement_date_of_offline_cf: "select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_offline_cf is null;"
+    - last_disbursement_date_of_online_cf: "select count(1) from vncrmtest_ext.user_tag_wide where last_disbursement_date_of_online_cf is null;"
+    - last_transaction_date_of_mpf: "select count(1) from vncrmtest_ext.user_tag_wide where last_transaction_date_of_mpf is null;"
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement is null;"
+    - cumulative_number_of_offline_cf_disbursement: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_offline_cf_disbursement is null;"
+    - cumulative_number_of_online_cf_disbursement: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_online_cf_disbursement is null;"
+    - cumulative_number_of_mpf_transaction: "select count(1) from vncrmtest_ext.user_tag_wide where cumulative_number_of_mpf_transaction is null;"
+    - last_full_repayment_date_of_cash_loan: "select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_cash_loan is null;"
+    - last_full_repayment_date_of_offline_cf: "select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_offline_cf is null;"
+    - last_full_repayment_date_of_online_cf: "select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_online_cf is null;"
+    - last_full_repayment_date_of_mpf: "select count(1) from vncrmtest_ext.user_tag_wide where last_full_repayment_date_of_mpf is null;"
+    - latest_due_date_of_cash_loan: "select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_cash_loan is null;"
+    - latest_due_date_of_offline_cf: "select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_offline_cf is null;"
+    - latest_due_date_of_online_cf: "select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_online_cf is null;"
+    - latest_due_date_of_mpf: "select count(1) from vncrmtest_ext.user_tag_wide where latest_due_date_of_mpf is null;"
+
+WideUnionSeparate:
+  Total:
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from {}crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=0;"
+    - outstanding_balance: "select count(1) from {}crmtest_ext.user_tag_wide where outstanding_balance>=1000;"
+    - days_past_due_of_cash_loan: "select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1;"
+
+  Separate1:
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from {}crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=0 and cumulative_number_of_mpf_transaction>=1;"
+    - outstanding_balance: "select count(1) from {}crmtest_ext.user_tag_wide where outstanding_balance>=1000 and mpf_outstanding_balance>=100;"
+    - days_past_due_of_cash_loan: "select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1 and days_past_due_of_online_cf<3;"
+
+  Separate2:
+    - cumulative_number_of_cash_loan_disbursement: "select count(1) from {}crmtest_ext.user_tag_wide where cumulative_number_of_cash_loan_disbursement>=0 and cumulative_number_of_mpf_transaction<1;"
+    - outstanding_balance: "select count(1) from {}crmtest_ext.user_tag_wide where outstanding_balance>=1000 and mpf_outstanding_balance<100;"
+    - days_past_due_of_cash_loan: "select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_cash_loan>=1 and days_past_due_of_online_cf>=3;"
+
+# for tags in storage null turn to 0
+WideStorageNullToZero:
+  WideNotNull:
+    - days_past_due_of_cash_loan: 'select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_cash_loan is not null;'
+    - days_past_due_of_offline_cf: 'select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_offline_cf is not null;'
+    - days_past_due_of_online_cf: 'select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_online_cf is not null;'
+    - days_past_due_of_mpf: 'select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_mpf is not null;'
+    - days_past_due_of_any_product: 'select count(1) from {}crmtest_ext.user_tag_wide where days_past_due_of_any_product is not null;'
+  StorageNotNull:
+    - days_past_due_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_cash_loan' then tag_str_value end) as days_past_due_of_cash_loan from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_cash_loan' group by user_id) a where days_past_due_of_cash_loan is not null;"
+    - days_past_due_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_offline_cf' then tag_str_value end) as days_past_due_of_offline_cf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_offline_cf' group by user_id) a where days_past_due_of_offline_cf is not null;"
+    - days_past_due_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_online_cf' then tag_str_value end) as days_past_due_of_online_cf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_online_cf' group by user_id) a where days_past_due_of_online_cf is not null;"
+    - days_past_due_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_mpf' then tag_str_value end) as days_past_due_of_mpf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_mpf' group by user_id) a where days_past_due_of_mpf is not null;"
+    - days_past_due_of_any_product: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_any_product' then tag_str_value end) as days_past_due_of_any_product from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_any_product' group by user_id) a where days_past_due_of_any_product is not null;"
+  StorageNull:
+    - days_past_due_of_cash_loan: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_cash_loan' then tag_str_value end) as days_past_due_of_cash_loan from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_cash_loan' group by user_id) a where days_past_due_of_cash_loan is null or days_past_due_of_cash_loan='';"
+    - days_past_due_of_offline_cf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_offline_cf' then tag_str_value end) as days_past_due_of_offline_cf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_offline_cf' group by user_id) a where days_past_due_of_offline_cf is null or days_past_due_of_offline_cf='';"
+    - days_past_due_of_online_cf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_online_cf' then tag_str_value end) as days_past_due_of_online_cf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_online_cf' group by user_id) a where days_past_due_of_online_cf is null or days_past_due_of_online_cf='';"
+    - days_past_due_of_mpf: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_mpf' then tag_str_value end) as days_past_due_of_mpf from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_mpf' group by user_id) a where days_past_due_of_mpf is null or days_past_due_of_mpf='';"
+    - days_past_due_of_any_product: "select count(1) from (select user_id,max(case when tag_id = 'days_past_due_of_any_product' then tag_str_value end) as days_past_due_of_any_product from {}crmtest_ext.user_tag_storage where tag_id='days_past_due_of_any_product' group by user_id) a where days_past_due_of_any_product is null or days_past_due_of_any_product='';"
+
+ESQuerySkip:
+  US: []
+  JP: ['online_cf_outstanding_balance','last_disbursement_date_of_online_cf','cumulative_number_of_online_cf_disbursement','last_full_repayment_date_of_online_cf','last_full_repayment_date_of_mpf','latest_due_date_of_online_cf','date_of_first_mpf_offline_transaction','days_past_due_of_online_cf']
+  CN: ['last_disbursement_date_of_offline_cf','last_disbursement_date_of_online_cf', 'last_transaction_date_of_mpf','cumulative_number_of_offline_cf_disbursement','cumulative_number_of_online_cf_disbursement','cumulative_number_of_mpf_transaction','last_full_repayment_date_of_offline_cf','last_full_repayment_date_of_online_cf','last_full_repayment_date_of_mpf','latest_due_date_of_offline_cf','latest_due_date_of_online_cf','latest_due_date_of_mpf','days_past_due_of_offline_cf','days_past_due_of_online_cf','days_past_due_of_mpf']
+
+CRM:
+  # swagger api
+  baseUrl: "http://10.10.10.129:8030"
+  header: {'Accept': 'application/json, text/javascript, */*; q=0.01',
+           'Content-Type': 'application/json',
+           'User-Agent': 'Mozilla/5.0'}
+  peopleLibrary:
+    path: "/api/crm/peopleLibrary"
+    query: "?peopleLibraryId={}&startTime={}&endTime={}&cron={}"
+    authorization: "YXBwS2V5PWU5OWMzODE5ZGJjYjRmODdhOGUzZDQ3YmQ2ZDNhOWFmJm9yaWVudGVEYXRlPVR1ZSwgMjIgT2N0IDIwMTkgMTE6MTY6MDkgR01UJnNpZ25hdHVyZT1PVll0T1YzR3BPL3BVM1Qvb0Y1eTh3VHFXS1E9JmlzVmFsRGF0ZT0x"
+    people_lib_id: "607"
+    start_time: "2019-11-12 16:50:12"
+    end_time: "2019-11-29 16:41:59"
+    cron: "8 48 * * * ? 2019"
+  peopleLibraryTask:
+    path: "/api/crm/peopleLibraryTask"
+    query: "?peopleLibraryId={}&cron={}"
+    authorization: "YXBwS2V5PWU5OWMzODE5ZGJjYjRmODdhOGUzZDQ3YmQ2ZDNhOWFmJm9yaWVudGVEYXRlPVR1ZSwgMjIgT2N0IDIwMTkgMTE6MTU6MzIgR01UJnNpZ25hdHVyZT1raDZCQkduK0UyYkZPVVU0RUU4NGhnN3g0SmM9JmlzVmFsRGF0ZT0x"
+    cron: "10 50 * * * ? 2019"
+
+  login:
+    path: "/login"
+    header: ""
+    payload: {'email': "mike.jordan@qq.com", 'password': "123456"}
+
+  search:
+    path: "/api/peoplelibrary/search"
+    header: &search_header {
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Encoding': 'gzip, deflate',
+      'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Pragma': 'no-cache',
+      'Region': *Region,
+      'User-Agent': 'Mozilla/5.0'}
+    payload1: &pl1 '
+      [{"labelId":4,
+      "labelWhere":"=",
+      "paramsJson":[{"id":5,"paramsValue":["Male"],"paramsOperator":""}]},
+      {"labelId":5,
+      "labelWhere":"<=",
+      "paramsJson":[{"id":6,"paramsValue":["2006-10-03"],"paramsOperator":""}]},
+      {"labelId":6,
+      "labelWhere":"in",
+      "paramsJson":[{"id":7,"paramsValue":["Single","Married"],"paramsOperator":""}]},
+      {"labelId":25,"labelWhere":"not in","paramsJson":[{"id":37,"paramsValue":["Failure","Rejected"],"paramsOperator":""}]},
+      {"labelId":66,
+      "labelWhere":">",
+      "paramsJson":[{"id":89,"paramsValue":["current_date|DATE"],"paramsOperator":"-"},{"id":90,"paramsValue":["20"],"paramsOperator":""}]}]'
+    payload2: &plvn2 '[{"labelId":85,"labelWhere":"=","paramsJson":[{"id":123,"paramsValue":["Nam"],"paramsOperator":""}]},{"labelId":88,"labelWhere":"in","paramsJson":[{"id":127,"paramsValue":["đại học","trung học"],"paramsOperator":""}]},{"labelId":106,"labelWhere":"not in","paramsJson":[{"id":155,"paramsValue":["blueseedtv","Chin-Media","cityads"],"paramsOperator":""}]},{"labelId":107,"labelWhere":"in","paramsJson":[{"id":156,"paramsValue":["MGM","Open Market Ads","Whitelist-JGS (BBE)"],"paramsOperator":""}]}]'
+
+  save:
+    path: "/api/peoplelibrary/save"
+    header: {
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': 'gzip, deflate',
+        'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Pragma': 'no-cache',
+        'Region': *Region,
+        'User-Agent': 'Mozilla/5.0'}
+    controlGroupJson: '[{"controlGroupId":"","controlGroupName":"grp1","ratio":%s,"isSend":0,"userCount":%s},{"controlGroupId":"","controlGroupName":"grp2","ratio":%s,"isSend":1,"userCount":%s}]'
+#    save_payload1: {"labelListJson": *pl1}
+#    save_payload2: {"labelListJson": *plvn2}
+
+  delete:
+    path: "/api/peoplelibrary/delete/"
+    header: *search_header
+
+  searchComplex:
+    path: "/V2/api/peoplelibrary/search"
+    header: *search_header
+
+  saveComplex:
+    path: "/V2/api/peoplelibrary/save"
+    header: *search_header
+    controlGroupJson: '[{"controlGroupId":"","controlGroupName":"grp1","ratio":%s,"isSend":0,"userCount":%s},{"controlGroupId":"","controlGroupName":"grp2","ratio":%s,"isSend":1,"userCount":%s}]'
+
+
+  selectPeopleComplex:
+    US:
+      monthlyIncome:
+        groupId: '15'
+        labelId: '64'
+        labelWhereValue: '>'
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':86,'paramsValue':["20000"],'paramsOperator':""}]
+      marryStatus:
+        groupId: '15'
+        labelId: '6'
+        labelWhereValue: 'in'
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':7,'paramsValue':["Married", "Single"],'paramsOperator':""}]
+      deviceOfFirstApply:
+        groupId: '15'
+        labelId: '60'
+        labelWhereValue: 'not in'
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':82,'paramsValue':["ios"],'paramsOperator':""}]
+      lastLoginDate:
+        groupId: '15'
+        labelId: '66'
+        labelWhereValue: '>='
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':89,'paramsValue':["current_date|DATE"],'paramsOperator':"-"}, {'paramsId':90,'paramsValue':["90"],'paramsOperator':""}]
+      latestRiskScore:
+        groupId: '16'
+        labelId: '82'
+        labelWhereValue: '>'
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':118,'paramsValue':["500"],'paramsOperator':""}]
+      installDate:
+        groupId: '16'
+        labelId: '14'
+        labelWhereValue: '>='
+        logicalCondition: 'and'
+        paramsList: [{'paramsId':16,'paramsValue':["current_date|DATE"],'paramsOperator':"-"}, {'paramsId':17,'paramsValue':["45"],'paramsOperator':""}]
+    JP:
+    CN:
+
+
+
+
+

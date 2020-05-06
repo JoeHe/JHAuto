@@ -1,0 +1,285 @@
+# report schedule test data matrix
+
+yyMMdd: &YMD "yyyyMMdd"
+yyyyMMddaa: &YMDA "yyyyMMdd aa"
+yyyyMMdd_HH_mm_ss: &YMDHMS "yyyyMMdd_HH_mm_ss"
+#yyyy-mm--dd: &Y-M-D "yyyy-mm-dd"
+yyyyMMdd_HH00: &YMDH0 "yyyyMMdd_HH00"
+yyyyMMddKaa: &YMDKA "yyyyMMdd Kaa"
+
+TimeZoneManila: &Manila "Asia/Manila"
+TimeZoneJakarta: &Jakarta "Asia/Jakarta"
+
+EmailRecipients: &MailRecip
+    - "mike@qq.com"
+    - "tom@qq.com"
+
+table-report-1:
+    BizType  : "dd_tbl_"
+    EmailTitle  : "ddtest tbl-{dateformat}-"
+    ScheduleTimeCreate : "0 19,21 * ? * TUE"
+    BackDate : 0
+    EmailTitleTimezone : *Manila
+    Template : "table"
+    EmailDateFormat: *YMD
+    Description: "test table report."
+    ScheduleTimeEdit : "3 23 * * * ?"
+    Title: "Table Report Title"
+    Type: "TableType LLL"
+    Order: "0"
+    TableSQL: &ReportSql "
+                  SELECT
+                    l.accountid,
+                    l.loanorderno,
+                    round(l.interest,2) AS interest,
+                    l.currency,
+                    l.effectiveat,
+                    CASE WHEN lpr.name LIKE 'B2B2C%' THEN 'BBC' WHEN lpr.name LIKE 'B2B2E%' THEN 'Whitelist BBE' ELSE 'Open Market' END AS channel,
+                                      l.status,
+                                      l.installments,
+                                      l.fundedat,
+                                      l.loantype,
+                                      round(l.deratefee,2) AS deratefee
+
+                  FROM phods11.loans l
+                  INNER JOIN (SELECT id FROM etl_utils.v_accounts WHERE is_test_user='N') a ON l.accountid = a.id
+                  LEFT JOIN (SELECT * FROM phods11.InvestOrders WHERE lower(STATUS) = 'success') iod ON l.id = iod.loanId
+
+                  LEFT JOIN phods11.loanproducts lpr ON l.productid = lpr.productid
+
+                  WHERE 1=1
+                  AND l.status IN ('Repaid2Platform','Funded','Repaid2Investor')
+                  AND date(l.effectiveat) between current_date-9 and current_date
+                  limit 10
+                  "
+    EmailHtmlHeader: &TableHtml "<html>
+                  <title>
+                  Test Test Table Report.
+                  </title>"
+    EmailHtmlTail: &HtmlTail '<p>
+                    Kind regards </br>
+                    Data test team
+                    </p>'
+    EmailRecipients: *MailRecip
+    AttachBackDate : 0
+
+table-report-2:
+    BizType  : "dd_tbl2_"
+    EmailTitle  : "ddtest tbl2-{dateformat}-"
+    ScheduleTimeCreate : "1 19,20 2 * * ?"      # Beijing Time 10:00AM(-8)
+    BackDate : 10
+    EmailTitleTimezone : *Jakarta
+    Template : "table"
+    EmailDateFormat: *YMDKA
+    Description: "test table report."
+    ScheduleTimeEdit : "3 39 * * * ?"
+    Title: "Table Report Title2"
+    Type: "TableType L2"
+    Order: "0"
+    TableSQL: *ReportSql
+    EmailHtmlHeader: *TableHtml
+    EmailHtmlTail: *HtmlTail
+    EmailRecipients: *MailRecip
+    AttachBackDate : 0
+
+excel-report-1:
+    BizType  : "dd_excel_"
+    EmailTitle  : "ddtest excel-{dateformat}-"
+    ScheduleTimeCreate : "0 21 2 ? * TUE"   # Beijing Time 10:00AM Tuesday
+    BackDate : 10
+    EmailTitleTimezone : *Jakarta
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: "excel-report-1"
+    ScheduleTimeEdit: "3 22 * * * ?"
+
+    ExcelName: "autoexcel-{dateformat}-"
+    SheetName: "testsheet1"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+#    AttachmentBackDate: 3
+    FileType: "excel"
+    MailHtml: &TestHtml '
+    <p>
+        Hi all&nbsp;
+    </p>
+
+    <p>
+       Here is the test mail. Please find it in the attachment.
+    </p>
+
+    <p>
+        Kind regards </br>
+    Data test team
+    </p>
+    '
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 3
+
+excel-report-2:
+    BizType  : "dd_excel2_"
+    EmailTitle  : "ddtest excel2-{dateformat}-"
+    ScheduleTimeCreate : "0 20 2,3 * * ?"    # Beijing Time 10:00, 11:00AM
+    BackDate : 8
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDA
+    Description: "excel-report-2"
+    ScheduleTimeEdit: "3 23 * * * ?"
+
+    ExcelName: "autoexcel2-{dateformat}-"
+    SheetName: "testsheet1"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDA
+#    AttachmentBackDate: 6
+    FileType: "excel"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 8
+
+csv-report-1:
+    BizType  : "dd_csv_"
+    EmailTitle  : "ddtest csv-{dateformat}-"
+    ScheduleTimeCreate : "0 11,15 5,6 * * ?"    # Beijing Time 13:00, 14:00PM
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDH0
+    Description: ""
+    ScheduleTimeEdit: "3 23 * * * ?"
+
+    ExcelName: "autocsv-{dateformat}-"
+    SheetName: "testcsvsheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDH0
+#    AttachmentBackDate: 3
+    FileType: "csv"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 5
+
+csv-report-2:
+    BizType  : "dd_csv2_"
+    EmailTitle  : "ddtest csv2-{dateformat}-"
+    ScheduleTimeCreate : "0 5,7 * ? * TUE"   # every Tuesday every hour 5 or 7 min send
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: ""
+    ScheduleTimeEdit: "3 25 * * * ?"
+
+    ExcelName: "autocsv2-{dateformat}-"
+    SheetName: "testcsv2sheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+#    AttachmentBackDate: 2
+    FileType: "csv"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 10
+
+# below 4 config for csv and txt, sftp and s3
+csv-report-sftp:
+    BizType  : "dd_csv_sftp"
+    EmailTitle  : "ddtest csv-sftp-{dateformat}-"
+    ScheduleTimeCreate : "0 5,7 * ? * TUE"   # every Tuesday every hour 5 or 7 min send
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: ""
+    ScheduleTimeEdit: "3 25 * * * ?"
+
+    ExcelName: "auto-csv-sftp-{dateformat}-"
+    SheetName: "testcsv2sheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+    FileType: "csv"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 10
+    UploadChannel: sftp
+    S3Key: inbound # only this folder have access, will auto move to /archive folder, check file there
+
+csv-report-s3:
+    BizType  : "dd_csv_s3"
+    EmailTitle  : "ddtest csv-s3-{dateformat}-"
+    ScheduleTimeCreate : "0 5,7 * ? * TUE"   # every Tuesday every hour 5 or 7 min send
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: ""
+    ScheduleTimeEdit: "3 25 * * * ?"
+
+    ExcelName: "auto-csv-s3-{dateformat}-"
+    SheetName: "testcsvs3sheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+    FileType: "csv"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 10
+    UploadChannel: test_s3
+    S3Key: upload_s3_test
+
+txt-report-sftp:
+    BizType  : "dd_txt_sftp"
+    EmailTitle  : "ddtest txt-sftp-{dateformat}-"
+    ScheduleTimeCreate : "0 5,7 * ? * TUE"   # every Tuesday every hour 5 or 7 min send
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: ""
+    ScheduleTimeEdit: "3 25 * * * ?"
+
+    ExcelName: "auto-txt-sftp-{dateformat}-"
+    SheetName: "testtxtsheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+    FileType: "txt"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 10
+    UploadChannel: sftp
+    S3Key: inbound # only this folder have access, will auto move to /archive folder, check file there
+
+txt-report-s3:
+    BizType  : "dd_txt_s3"
+    EmailTitle  : "ddtest txt-s3-{dateformat}-"
+    ScheduleTimeCreate : "0 5,7 * ? * TUE"   # every Tuesday every hour 5 or 7 min send
+    BackDate : 10
+    EmailTitleTimezone : *Manila
+    Template : "excel"
+    EmailDateFormat: *YMDHMS
+    Description: ""
+    ScheduleTimeEdit: "3 25 * * * ?"
+
+    ExcelName: "auto-txt-s3-{dateformat}-"
+    SheetName: "testxts3sheet"
+    SheetOrder: 1
+    AttachmentDateFormat: *YMDHMS
+    FileType: "txt"
+    MailHtml: *TestHtml
+    ExcelReportSql: *ReportSql
+    EmailRecipients: *MailRecip
+    EmailOrder: 0
+    AttachBackDate : 10
+    UploadChannel: test_s3
+    S3Key: upload_s3_test

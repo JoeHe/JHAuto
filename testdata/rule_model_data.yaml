@@ -1,0 +1,95 @@
+# All service share same host url, only the port diff
+# Check in rancher
+Host:
+  Philippines: ''
+  Indonesia: ''
+  Vietnam: 'http://1.1.1.11'
+
+CeleryPort:
+  Philippines: ''
+  Indonesia: ''
+  Vietnam: ':12345'
+
+
+
+QueryCount: 15
+
+BorrowApply:
+  path: '/borrow-apply'
+  header: {'Content-Type': 'application/json'}
+  payload:
+    General: {"id_account": 0, "id_borrow": 0, "is_review": 'false', "transaction_id": None}  # id_account and id_borrow need update
+    Philippines: ''
+    Indonesia: ''
+    Vietnam:
+      - {
+        "id_account": 2319,
+        "id_borrow": 7502,
+        "is_review": 'false'}
+      - {
+        "id_account": 2333,
+        "id_borrow": 7575,
+        "is_review": 'false'}
+      - {
+        "id_account": 2328,
+        "id_borrow": 7547,
+        "is_review": 'false'}
+      - {
+        "id_account": 2335,
+        "id_borrow": 7562,
+        "is_review": 'false'}
+      - {
+        "id_account": 1659,
+        "id_borrow": 1475,
+        "is_review": 'false'}
+  payloadnew:
+    Vietnam:
+      - {"id_account": 422, "id_borrow": 1875, "is_review": 'false', "transaction_id": "RT4221875"} # new
+      - {"id_account": 2336, "id_borrow": 7563, "is_review": 'false', "transaction_id": None}
+      - {"id_account": 3085, "id_borrow": 8231, "is_review": 'false', "transaction_id": None}
+      - {"id_account": 3143, "id_borrow": 8275, "is_review": 'false', "transaction_id": None}
+      - {"id_account": 3144, "id_borrow": 8276, "is_review": 'false', "transaction_id": None}
+      - {"id_account": 3153, "id_borrow": 8283, "is_review": 'false', "transaction_id": None}
+      - {"id_account": 0, "id_borrow": 0, "is_review": 'true', "transaction_id": None}  # adjust
+
+VNCashModel:
+  SetField:
+    -
+      homeOwnershipCode: '6'
+      stayLength: 'Trên 10 Năm'
+      property: 'Tôi sở hữu một chiếc xe máy'
+      occupation: 'Công nhân'
+      occupationCode: '10'
+    -
+      homeOwnershipCode: '4'
+      stayLength: '6- 12 Tháng'
+      property: 'Tôi sở hữu một ngôi nhà và một chiếc xe máy'
+      occupation: 'Chủ doanh nghiệp'
+      occupationCode: '1'
+    -
+      homeOwnershipCode: 'NULL'
+      stayLength: 'NULL'
+      property: 'NULL'
+      occupation: 'NULL'
+      occupationCode: 'NULL'
+
+  expectFeature:
+    - {"is_homeownershipcode_eq_6": 1, "staylength_code": 5, "property_code": 2,  "is_occupationcode_eq_10": 1}
+    - {"is_homeownershipcode_eq_4": 1, "staylength_code": 2, "property_code": 4,  "is_occupationcode_eq_10": 0}
+    - {'is_homeownershipcode_eq_4': 0, 'is_homeownershipcode_eq_5': 0, 'is_homeownershipcode_eq_6': 0, 'staylength_code': None, "property_code": None,  "is_occupationcode_eq_10": 0}
+
+SQL:
+  insertKycScoreNow: "INSERT INTO `vnrisk_rule_kyc_score_result` (`id_account`, `id_borrow`, `result`, `credit_score`, `actual_result`, `actual_credit_score`, `created_at`, `created_by`, `updated_at`, `updated_by`, `snapshot_version`, `group_id`, `output_score`, `blocking_day`, `transaction_id`, `scenario_code`, `reason_id`, `kyc_id`, `kyc_version`)
+                     VALUES
+                    ({}, 6666, 'approve', 643.00, 'approve', 643.00, now(), 'system', now(), 'system', NULL, 1, 2.00, 0, '4131331481563123456', NULL, NULL, NULL, NULL);"
+  insertKycScoreDayGap: "INSERT INTO `vnrisk_rule_kyc_score_result` (`id_account`, `id_borrow`, `result`, `credit_score`, `actual_result`, `actual_credit_score`, `created_at`, `created_by`, `updated_at`, `updated_by`, `snapshot_version`, `group_id`, `output_score`, `blocking_day`, `transaction_id`, `scenario_code`, `reason_id`, `kyc_id`, `kyc_version`)
+                          VALUES
+                          ({}, 8888, 'approve', 643.00, 'approve', 643.00, '{}', 'system', now(), 'system', NULL, 1, 2.00, 0, '4131285405154713600', NULL, NULL, NULL, NULL); "
+  insertBlackUser: "INSERT INTO `vnrisk_black_user_id` (`black_id_account`, `batch_id`, `is_valid`, `effective_time`, `reason`, `created_at`, `updated_at`, `created_by`, `updated_by`)
+                    VALUES ({}, NULL, 1, now(), NULL, now(), now(), '', '');"
+
+Mongo:
+  insert:
+    loans_repaid_at: {'loan_id': 10086, 'created_at': '2020-01-19 16:09:02', 'id_account': 1991, 'loan_create_at': '2020-01-19 16:09:02', 'loan_type': '1','repaid_at': '2020-03-17 19:00:12', 'repaid_interest': 191092.0, 'repaid_principal': 808000.0, 'updated_at': ''}
+  update:
+    loans_repaid_at: {'id_account': 10086, 'repaid_at': ''}
